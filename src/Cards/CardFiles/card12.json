@@ -1,0 +1,8 @@
+{
+  "Name": "Fireball",
+  "Mana": 4,
+  "rarity": "Common",
+  "CardClass": "Natural",
+  "type": "Spell",
+  "Description": " Deal 6 damage "
+}

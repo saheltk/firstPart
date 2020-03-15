@@ -1,0 +1,8 @@
+{
+  "Name": "Friendly Smith",
+  "Mana": 1,
+  "rarity": "Common",
+  "CardClass": "Natural",
+  "type": "Spell",
+  "Description": " adds 1 weapon to your cards with increasing it's attack and live 2 points "
+}

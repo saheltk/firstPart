@@ -1,0 +1,8 @@
+{
+  "Name": "Polymorph",
+  "Mana": 4,
+  "rarity": "Rare",
+  "CardClass": "Mage",
+  "type": "Spell",
+  "Description": " aTransform minion to 1/1 Minion(Sheep) "
+}

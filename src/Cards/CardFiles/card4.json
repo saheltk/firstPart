@@ -1,0 +1,10 @@
+{
+  "Name": "Tiny Life Stealer",
+  "Mana": 4,
+  "rarity": "Epic",
+  "CardClass": "Rogue",
+  "type": "Minion",
+  "Description": "You can get one extra HP when you attack with this Minion",
+  "HP": 2,
+  "attack": 4
+}

@@ -1,0 +1,10 @@
+{
+  "Name": "Twig of the World Tree",
+  "Mana": 4,
+  "rarity": "Legendary",
+  "CardClass": "Natural",
+  "type": "Weapons",
+  "Description": " Gain 10 Mana Crystals ",
+  "attack": 1,
+  "Durability": 5
+}
