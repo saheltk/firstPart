@@ -1,8 +1,10 @@
 {
-  "Name": "Friendly Smith",
-  "Mana": 1,
-  "rarity": "Common",
+  "Name": "Big Brother",
+  "Mana": 7,
+  "rarity": "Legendary",
   "CardClass": "Natural",
-  "type": "Spell",
-  "Description": " adds 1 weapon to your cards with increasing it's attack and live 2 points "
+  "type": "Minion",
+  "Description": " So strong! ",
+  "HP": 10,
+  "attack": 10
 }

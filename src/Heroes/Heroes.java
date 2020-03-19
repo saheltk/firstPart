@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Heroes {
     int Mana;
-    HeroName name;
+public     HeroName name;
     int HP;
     int attack;
     boolean heroPower = false;
@@ -20,12 +20,21 @@ public class Heroes {
 
     Scanner s = new Scanner(System.in);
     Heroes againstHero;
-     ArrayList<Cards> cardsArrayList = new ArrayList<>();//be player ham add she
+public      ArrayList<Cards> cardsArrayList = new ArrayList<>();//be player ham add she
     ArrayList<Cards> onBoardCards = new ArrayList<Cards>();
 
 
-    Heroes(HeroName name) {
-        this.name = name;
+    public Heroes(HeroName name) {
+        try {
+            this.name = name;
+        }
+        catch (Error error){
+            System.out.println("Heroes are:\n"+
+                    "     Mage,\n" +
+                    "    Rogue,\n" +
+                    "    Warlock,");
+        }
+
         HP = 30;
         this.SpecialPower();
     }
@@ -35,13 +44,13 @@ public class Heroes {
         switch (name) {
             case Warlock:
                 HP = 35;
-                return;
+                break;
             case Rogue:
                 Rogue = true;
-                return;
+                break;
             case Mage:
                 Mage = true;
-                return;
+                break;
         }
     }
 
@@ -65,7 +74,7 @@ public class Heroes {
                 heroPower=false;
                 System.out.println("Selected Weapon?");
                 /////////////////////////////////////////////////////
-                return;
+                break;
             case Rogue:
                 if (Mana<3){
                  System.out.println("No enough Mana ");return; }
@@ -73,13 +82,13 @@ public class Heroes {
                 System.out.println("Selected Weapon?");
                 /////////////////////////////////////////////////////
                 Mana-=3;
-                return;
+                break;
             case Mage:
                 System.out.println("Target?");
                 /////////////////////////////////////////////////////
                 heroPower=false;
                 Mana-=2;
-                return;
+                break;
         }
         this.checkDie();
     }
@@ -116,7 +125,7 @@ public class Heroes {
     }
 
     public void attack(Player player, Cards c) {
-            player.currrentHero.HP -= attack;
+            player.CurrentHero.HP -= attack;
 
     }
 
@@ -131,5 +140,57 @@ public class Heroes {
         }
     }
 
+    public void addCart(Cards card){
+        cardsArrayList.add(card);
+    }
 
+    public void removeCart(Cards card){
+        cardsArrayList.remove(card);
+    }
+
+    public ArrayList<Cards> setCards() {
+        ArrayList<Cards> cards = new ArrayList<Cards>();
+        switch (name){
+            case Warlock:
+                cards.add(Cards.createCard("Dreadscale"));
+                cards.add(Cards.createCard("Twig of the World Tree"));
+                cards.add(Cards.createCard("Fireball"));
+                cards.add(Cards.createCard("Wolfrider"));
+                cards.add(Cards.createCard("Big Brother"));
+                cards.add(Cards.createCard("Baby Loyal"));
+                cards.add(Cards.createCard("Kind Nurse"));
+                cards.add(Cards.createCard("Die Hard"));
+                cards.add(Cards.createCard("Rich Guy"));
+                cards.add(Cards.createCard("Candleshot"));
+                break;
+
+            case Mage:
+                cards.add(Cards.createCard("Polymorph"));
+                cards.add(Cards.createCard("Candleshot"));
+                cards.add(Cards.createCard("Healing Touch"));
+                cards.add(Cards.createCard("Fireball"));
+                cards.add(Cards.createCard("Barrel Toss"));
+                cards.add(Cards.createCard("Baby Loyal"));
+                cards.add(Cards.createCard("Kind Nurse"));
+                cards.add(Cards.createCard("Savage Roar"));
+                cards.add(Cards.createCard("Sheep"));
+                break;
+
+            case Rogue:
+                cards.add(Cards.createCard("Friendly Smith"));
+                cards.add(Cards.createCard("Glaivezooka"));
+                cards.add(Cards.createCard("Fireball"));
+                cards.add(Cards.createCard("Wolfrider"));
+                cards.add(Cards.createCard("Baby Loyal"));
+                cards.add(Cards.createCard("Savage Roar"));
+                cards.add(Cards.createCard("Rich Guy"));
+                cards.add(Cards.createCard("Big Brother"));
+                cards.add(Cards.createCard("Kind Nurse"));
+                cards.add(Cards.createCard("Twig of the World Tree"));
+                break;
+
+        }
+        this.cardsArrayList = cards;
+        return cards;
+    }
 }

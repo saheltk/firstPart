@@ -8,11 +8,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Cards {
-     static ArrayList<Cards> allCards = new ArrayList<Cards>();
+   static FileReader [] file= new FileReader[20];
+   static Cards [] cards = new Cards[20];
+
+public     static ArrayList<Cards> allCards = new ArrayList<Cards>();
     static ArrayList<Cards> allMage = new ArrayList<Cards>();
     static ArrayList<Cards> allRogue = new ArrayList<Cards>();
     static ArrayList<Cards> allWarlock = new ArrayList<Cards>();
     static ArrayList<Cards> allNatural= new ArrayList<Cards>();
+
+    static ArrayList<Cards> allMinion = new ArrayList<Cards>();
+    static ArrayList<Cards> allWeapon = new ArrayList<Cards>();
+    static ArrayList<Cards> allSpell= new ArrayList<Cards>();
+
 
     public String Name;
      public int Mana;
@@ -47,37 +55,51 @@ public class Cards {
         if(cost==0){
             switch (rarity){
                 case Common:
-                    cost=2;return;
+                    cost=2;break;
                 case Rare:
-                    cost=5;return;
+                    cost=5;break;
                 case Epic:
-                    cost=8;return;
+                    cost=8;break;
                 case Legendary:
-                    cost=10;return;
+                    cost=10;break;
             }
         }
     }
     public void setClassArray(){
-            switch (CardClass){
-                case Warlock:
-                    allWarlock.add(this);
-                    return;
-                case Rogue:
-                    allRogue.add(this);
-                    return;
-                case Mage:
-                    allMage.add(this);
-                    return;
-                case Natural:
-                    allNatural.add(this);
-                    return;
-            }
+        switch (CardClass){
+            case Warlock:
+                allWarlock.add(this);
+                break;
+            case Rogue:
+                allRogue.add(this);
+                break;
+            case Mage:
+                allMage.add(this);
+                break;
+            case Natural:
+                allNatural.add(this);
+                break;
+        }
+    }
+    public void setTypeArray(){
+        switch (type){
+            case Minion:
+                allMinion.add(this);
+                break;
+            case Weapons:
+                allWeapon.add(this);
+                break;
+            case Spell:
+                allSpell.add(this);
+                break;
+
+        }
     }
     public void setCard(){
         allCards.add(this);
         this.setClassArray();
+        this.setTypeArray();
         this.setCost();
-        //System.out.println(this.Name);
     }
 
 
@@ -108,49 +130,53 @@ public class Cards {
     public static void CLI() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
 
-            FileReader file1 = new FileReader("src\\Cards\\CardFiles\\card1.json");
-            FileReader file2 = new FileReader("src\\Cards\\CardFiles\\card2.json");
-            FileReader file3 = new FileReader("src\\Cards\\CardFiles\\card3.json");
-            FileReader file4 = new FileReader("src\\Cards\\CardFiles\\card4.json");
-            FileReader file5 = new FileReader("src\\Cards\\CardFiles\\card5.json");
-            FileReader file6 = new FileReader("src\\Cards\\CardFiles\\card6.json");
-            FileReader file7 = new FileReader("src\\Cards\\CardFiles\\card7.json");
-            FileReader file8 = new FileReader("src\\Cards\\CardFiles\\card8.json");
-            FileReader file9 = new FileReader("src\\Cards\\CardFiles\\card9.json");
-            FileReader file10 = new FileReader("src\\Cards\\CardFiles\\card10.json");
-            FileReader file11 = new FileReader("src\\Cards\\CardFiles\\card11.json");
-            FileReader file12 = new FileReader("src\\Cards\\CardFiles\\card12.json");
-          /*  FileReader file13 = new FileReader("src\\Cards\\CardFiles\\card13.json");
-            FileReader file14 = new FileReader("src\\Cards\\CardFiles\\card14.json");
-            FileReader file15 = new FileReader("src\\Cards\\CardFiles\\card15.json");
-            FileReader file16 = new FileReader("src\\Cards\\CardFiles\\card16.json");
-            FileReader file17 = new FileReader("src\\Cards\\CardFiles\\card17.json");
-            FileReader file18 = new FileReader("src\\Cards\\CardFiles\\card18.json");
-            FileReader file19 = new FileReader("src\\Cards\\CardFiles\\card19.json");
-            FileReader file20 = new FileReader("src\\Cards\\CardFiles\\card20.json");*/
+             file[0] = new FileReader("src\\Cards\\CardFiles\\card1.json");
+             file[1] = new FileReader("src\\Cards\\CardFiles\\card2.json");
+             file[2] = new FileReader("src\\Cards\\CardFiles\\card3.json");
+             file[3] = new FileReader("src\\Cards\\CardFiles\\card4.json");
+             file[4] = new FileReader("src\\Cards\\CardFiles\\card5.json");
+             file[5] = new FileReader("src\\Cards\\CardFiles\\card6.json");
+             file[6] = new FileReader("src\\Cards\\CardFiles\\card7.json");
+             file[7] = new FileReader("src\\Cards\\CardFiles\\card8.json");
+             file[8] = new FileReader("src\\Cards\\CardFiles\\card9.json");
+             file[9] = new FileReader("src\\Cards\\CardFiles\\card10.json");
+             file[10] = new FileReader("src\\Cards\\CardFiles\\card11.json");
+             file[11] = new FileReader("src\\Cards\\CardFiles\\card12.json");
+             file[12] = new FileReader("src\\Cards\\CardFiles\\card13.json");
+             file[13] = new FileReader("src\\Cards\\CardFiles\\card14.json");
+             file[14] = new FileReader("src\\Cards\\CardFiles\\card15.json");
+             file[15] = new FileReader("src\\Cards\\CardFiles\\card16.json");
+             file[16] = new FileReader("src\\Cards\\CardFiles\\card17.json");
+             file[17] = new FileReader("src\\Cards\\CardFiles\\card18.json");
+             file[18] = new FileReader("src\\Cards\\CardFiles\\card19.json");
+             file[19] = new FileReader("src\\Cards\\CardFiles\\card20.json");
 
         try {
-            Cards c1 = objectMapper.readValue(file1,Cards.class);c1.setCard();
-            Cards c2 = objectMapper.readValue(file2,Cards.class);c2.setCard();
-            Cards c3 = objectMapper.readValue(file3,Cards.class);c3.setCard();
-            Cards c4 = objectMapper.readValue(file4,Cards.class);c4.setCard();
-            Cards c5 = objectMapper.readValue(file5,Cards.class);c5.setCard();
-            Cards c6 = objectMapper.readValue(file6,Cards.class);c6.setCard();
-            Cards c7 = objectMapper.readValue(file7,Cards.class);c7.setCard();
-            Cards c8 = objectMapper.readValue(file8,Cards.class);c8.setCard();
-            Cards c9 = objectMapper.readValue(file9,Cards.class);c9.setCard();
-            Cards c10 = objectMapper.readValue(file10,Cards.class);c10.setCard();
-            Cards c11 = objectMapper.readValue(file11,Cards.class);c11.setCard();
-            Cards c12 = objectMapper.readValue(file12,Cards.class);c12.setCard();
-            /*  Cards c13 = objectMapper.readValue(file13,Cards.class);c13.setCard();
-            Cards c14 = objectMapper.readValue(file14,Cards.class);c14.setCard();
-            Cards c15 = objectMapper.readValue(file15,Cards.class);c15.setCard();
-            Cards c16 = objectMapper.readValue(file16,Cards.class);c16.setCard();
-            Cards c17 = objectMapper.readValue(file17,Cards.class);c17.setCard();
-            Cards c18 = objectMapper.readValue(file18,Cards.class);c18.setCard();
-            Cards c19 = objectMapper.readValue(file19,Cards.class);c19.setCard();
-            Cards c20 = objectMapper.readValue(file20,Cards.class);c20.setCard();*/
 
+            cards[0] = objectMapper.readValue(file[0],Cards.class);cards[0].setCard();
+            cards[1] = objectMapper.readValue(file[1],Cards.class);cards[1].setCard();
+            cards[2] = objectMapper.readValue(file[2],Cards.class);cards[2].setCard();
+            cards[3] = objectMapper.readValue(file[3],Cards.class);cards[3].setCard();
+            cards[4] = objectMapper.readValue(file[4],Cards.class);cards[4].setCard();
+            cards[5] = objectMapper.readValue(file[5],Cards.class);cards[5].setCard();
+            cards[6] = objectMapper.readValue(file[6],Cards.class);cards[6].setCard();
+            cards[7] = objectMapper.readValue(file[7],Cards.class);cards[7].setCard();
+            cards[8] = objectMapper.readValue(file[8],Cards.class);cards[8].setCard();
+            cards[9] = objectMapper.readValue(file[9],Cards.class);cards[9].setCard();
+            cards[10] = objectMapper.readValue(file[10],Cards.class);cards[10].setCard();
+            cards[11] = objectMapper.readValue(file[11],Cards.class);cards[11].setCard();
+            cards[12] = objectMapper.readValue(file[12],Cards.class);cards[12].setCard();
+            cards[13] = objectMapper.readValue(file[13],Cards.class);cards[13].setCard();
+            cards[14] = objectMapper.readValue(file[14],Cards.class);cards[14].setCard();
+            cards[15] = objectMapper.readValue(file[15],Cards.class);cards[15].setCard();
+            cards[16] = objectMapper.readValue(file[16],Cards.class);cards[16].setCard();
+            cards[17] = objectMapper.readValue(file[17],Cards.class);cards[17].setCard();
+            cards[18] = objectMapper.readValue(file[18],Cards.class);cards[18].setCard();
+            cards[19] = objectMapper.readValue(file[19],Cards.class);cards[19].setCard();
+
+           // System.out.println("Minions "+allMinion.size());
+           // System.out.println("Spell "+allSpell.size());
+           // System.out.println("Weapons "+allWeapon.size());
 
         }
         catch (Exception e){
@@ -159,7 +185,35 @@ public class Cards {
 
     }
 
-    public static void main(String[] args) throws IOException {
-        Cards.CLI();
+    public static Cards createCard(String Name){
+        Cards answer = null;
+        try {
+            for (int i = 0; i < 20; i++) {
+                if(cards[i].Name.equalsIgnoreCase(Name)){
+                    answer = new Cards(Name,cards[i].Mana,cards[i].rarity,cards[i].CardClass,cards[i].type,cards[i].Description);
+                    answer.cost=cards[i].cost;
+                    answer.HP=cards[i].HP;
+                    answer.Durability=cards[i].Durability;
+                    answer.attack=cards[i].attack;
+                }
+            }
+            return answer;
+        }
+        catch (Exception e){
+            System.out.println("There is no card with that name"+Name);
+            return null;
+        }
+
     }
+
+    public static ArrayList<Cards> createCard(ArrayList<String> cardname){
+        ArrayList<Cards> answer= new ArrayList();
+        for (String cn: cardname ) {
+            answer.add(createCard(cn));
+        }
+        return answer;
+    }
+
+
+
 }

@@ -1,8 +1,10 @@
 {
-  "Name": "Friendly Smith",
-  "Mana": 1,
-  "rarity": "Common",
+  "Name": "Wolfrider",
+  "Mana": 3,
+  "rarity": "Rare",
   "CardClass": "Natural",
-  "type": "Spell",
-  "Description": " adds 1 weapon to your cards with increasing it's attack and live 2 points "
+  "type": "Minion",
+  "Description": " Charge ",
+  "HP": 1,
+  "attack": 3
 }

@@ -1,8 +1,8 @@
 {
-  "Name": "Friendly Smith",
-  "Mana": 1,
+  "Name": "Kind Nurse",
+  "Mana": 2,
   "rarity": "Common",
   "CardClass": "Natural",
   "type": "Spell",
-  "Description": " adds 1 weapon to your cards with increasing it's attack and live 2 points "
+  "Description": " add +2 HP to only one character  "
 }
