@@ -23,12 +23,14 @@ public class Player {
     public HeroName CurrentHeroName;
     public String CurrentHeroNameST;
 
+
     public ArrayList<Cards> CardsArrayList = new ArrayList<>();
     public ArrayList<String> CardNamesArrayList = new ArrayList<>();
 
     public ArrayList<String> AvailableHeroesNamesST = new ArrayList<>();
     public ArrayList<HeroName> AvailableHeroesNames = new ArrayList<>();
     public ArrayList<Heroes> AvailableHeroes = new ArrayList<>();
+
     public ArrayList<Cards> MyCardsArrayList = new ArrayList<>();
     public ArrayList<String> MyCardNamesArrayList = new ArrayList<>();
 
@@ -63,16 +65,18 @@ return null;
         CurrentHeroNameST=HeroNameST;
         CurrentHeroName=stringToHero(HeroNameST);
         CurrentHero=new Heroes(CurrentHeroName);
+
         CreationTime=string(creationTime);
 
         MyCardNamesArrayList=MycardNames;
-        MyCardsArrayList=Cards.createCard(MycardNames);
+        MyCardsArrayList=Cards.createCard(MyCardNamesArrayList);
+
 
         CardNamesArrayList=cardNames;
-        CardsArrayList=Cards.createCard(cardNames);
+        CardsArrayList=Cards.createCard(CardNamesArrayList);
 
         AvailableHeroesNamesST=heroNames;
-        for (String a : heroNames) {
+        for (String a : AvailableHeroesNamesST) {
             AvailableHeroesNames.add(stringToHero(a));
         }
         try {
@@ -141,9 +145,9 @@ return null;
         fileWriter.write("\"CreationTime\": \""+CreationTime+"\",\n");
         fileWriter.write("\"Gems\": \""+Gems+"\",\n");
         fileWriter.write("\"CurrentHeroNameST\": \""+CurrentHeroNameST+"\",\n");
-        fileWriter.write("\"AvailableCardsArrayList\": \""+CardNamesArrayList+"\",\n");
-        fileWriter.write("\"AvailableHeroesST\": \""+AvailableHeroesNamesST+"\",\n");
-        fileWriter.write("\"MyCardsArrayList\": \""+MyCardNamesArrayList+"\",\n");
+        fileWriter.write("\"CardNamesArrayList\": \""+CardNamesArrayList+"\",\n");
+        fileWriter.write("\"AvailableHeroesNamesST\": \""+AvailableHeroesNamesST+"\",\n");
+        fileWriter.write("\"MyCardNamesArrayList\": \""+MyCardNamesArrayList+"\",\n");
         fileWriter.write("\"Log\": \""+log+"\"\n");
 
         fileWriter.write("}");
@@ -153,11 +157,24 @@ return null;
     catch (Exception e){
         System.out.println("user creating problem!");
     }
+
+
 }
+
+    public ArrayList stringToArray(String a){
+        ArrayList<String> answer= new ArrayList<>();
+        int r= a.length();
+        a=a.substring(1,r);
+        while (a.contains(",")){
+            answer.add(a.substring(0,a.indexOf(",")).trim());
+            a=a.substring(a.indexOf(",")+1);
+        }
+        return answer;
+    }
     public static void setUp() throws IOException {
         boolean flag=true;
         ObjectMapper objectMapper = new ObjectMapper();
-        //try {
+        try {
             while (flag) {
                 String id = "src\\Player\\users\\ID" + (number + 1) + ".json";
                 FileReader fileReader = new FileReader(id);
@@ -180,11 +197,11 @@ return null;
 
                 number++;
             }
-       //}
-       // catch (Exception e){
+       }
+        catch (Exception e){
                 flag=false;
                 return;
-        //}
+        }
 }
 
     public void AddMyCard(Cards newCard) throws IOException {
