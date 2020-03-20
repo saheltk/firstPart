@@ -23,7 +23,7 @@ public     HeroName name;
 public      ArrayList<Cards> cardsArrayList = new ArrayList<>();//be player ham add she
     ArrayList<Cards> onBoardCards = new ArrayList<Cards>();
 
-
+    public Heroes(){}
     public Heroes(HeroName name) {
         try {
             this.name = name;

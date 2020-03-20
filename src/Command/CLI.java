@@ -28,7 +28,7 @@ public class CLI {
         Scanner s = new Scanner(System.in);
         System.out.println(ConsoleColors.BLUE_BOLD + " Welcome to ");
         System.out.println("            \u2694 HEARTHSTONE \u2694 \n");
-        System.out.println(ConsoleColors.PURPLE_BRIGHT +"Help:");
+        System.out.println(ConsoleColors.GREEN +"Help:");
         System.out.println("You can write down the number for choosing that option! ");
         System.out.println("You can also write down \"0\" for exit-a \n");
 
@@ -39,21 +39,20 @@ public class CLI {
     }
     static Player Sign() throws IOException {
         Player player=null;
-        System.out.println(ConsoleColors.RESET+"Account: ");
+        System.out.println(ConsoleColors.BLUE_BRIGHT+"     Account: "+ConsoleColors.RESET);
+        System.out.println(ConsoleColors.RED+"0-Exit "+ConsoleColors.RESET);
         System.out.println("1-SignIn ");
         System.out.println("2-SignUp ");
-        System.out.println("3-Exit ");
 
 
-
-        switch (getAnswer(3)){
+        switch (getAnswer(2)){
             case 1:
                 player= SignIn();
                 break;
             case 2:
                 player= SignUp();
                 break;
-            case 3:
+            case 0:
                 Runtime.getRuntime().exit(1);
                 break;
         }
@@ -75,7 +74,7 @@ public class CLI {
         return answer;
     }
 
-    static String getAnswer(String a){
+    static String getAnswer(String a) throws IOException {
         String answer="";
         try {
             Scanner m = new Scanner(System.in);
@@ -85,6 +84,8 @@ public class CLI {
             System.out.println("Invalid "+a);
             getAnswer(a);
         }
+        if (answer.equalsIgnoreCase("exit"))Sign();
+
         if (a.equalsIgnoreCase("Username")) {
             if (!Logs.usernames.contains(answer)) {
                 System.out.println(a + " Not Found");
@@ -101,13 +102,11 @@ public class CLI {
     }
 
     static Player SignIn() throws IOException {
-        System.out.println("if you want to exit-a you can type \"exit\" instead");
+        System.out.println(ConsoleColors.GREEN+"Help:\nIf you want to exit you can type \"exit\" instead"+ConsoleColors.RESET);
         System.out.println("Username: ");
         String username =getAnswer("Username");
-        if (username.equalsIgnoreCase("exit"))Sign();
         System.out.println("Password: ");
         String password =getAnswer("Password");
-        if (password.equalsIgnoreCase("exit"))Sign();
 try {
     while (!Logs.PassCheck(username,password))
         password =getAnswer("Password");
@@ -116,20 +115,17 @@ try {
             System.out.println("Problem !  ");Sign();
         }
         Player player=PlayersFactory.find(username);
-        player.log.SignIn();
-      //  player.addSignIn();
-        System.out.println(ConsoleColors.PURPLE_BRIGHT+"Welcome Back "+username+ConsoleColors.RESET+"\n");
+        player.log.SignIn(player);
+        System.out.println("\n"+ConsoleColors.PURPLE_BRIGHT+"Welcome Back "+username+ConsoleColors.RESET+"\n");
         return PlayersFactory.find(username);
     }
 
     static Player SignUp() throws IOException {
-        System.out.println("if you want to exit-a you can type \"exit\" instead");
+        System.out.println(ConsoleColors.GREEN+"if you want to exit-a you can type \"exit\" instead"+ConsoleColors.RESET);
         System.out.println("Username: ");
         String username =getAnswer(" new Username");
-        if (username.equalsIgnoreCase("exit"))Sign();
         System.out.println("Password: ");
         String password =getAnswer("Password");
-        if (password.equalsIgnoreCase("exit"))Sign();
 
         Timestamp creationTime = Player.setTime();
         System.out.println("");
@@ -152,7 +148,7 @@ try {
         System.out.println("Available cards are: \n");
         Heroes Hero = new Heroes(heroName);
         ArrayList<Cards> heroes = Hero.setCards();
-       // System.out.println(heroes.size());
+
         ArrayList<String> cardNames =new ArrayList<>();
         for (int i = 0; i <heroes.size() ; i++) {
             cardNames.add(heroes.get(i).Name);
@@ -171,12 +167,12 @@ try {
             System.out.println("");
 
         }
-        ArrayList<String> heroNameArrayList= new ArrayList<>();
-        heroNameArrayList.add(heroNameST);
+        ArrayList<Heroes> heroNameArrayList= new ArrayList<>();
+        heroNameArrayList.add(Hero);
 
-        ArrayList<String> mycards= new ArrayList<>();
+        ArrayList<Cards> mycards= new ArrayList<>();
 //Log
-        Player player= new Player(username,password,50,heroNameST,cardNames,heroNameArrayList,Player.setTime(), mycards);
+        Player player= new Player(username,password,50,Hero,heroes,heroNameArrayList,Player.setTime(), mycards);
         player.update();
         player.log = new Logs(player);
         Logs.usernames.add(username);
@@ -186,7 +182,7 @@ try {
 
     static void collections(Player player) throws IOException {
 
-        System.out.println(ConsoleColors.RESET+"Card Collections: ");
+        System.out.println(ConsoleColors.BLUE_BRIGHT+"     Card Collections: ");
         System.out.println(ConsoleColors.RED+"0-Exit-a  ");
         System.out.println(ConsoleColors.RESET+"1-Available Cards ");
         System.out.println("2-My Cards  ");
@@ -220,6 +216,7 @@ try {
         player.log.Write("list","cards:All");
         ArrayList<Cards> heroes = player.CardsArrayList;
         System.out.println("You have "+ConsoleColors.GREEN+ heroes.size()+ConsoleColors.RESET+" available cards");
+        System.out.println(ConsoleColors.BLUE_BRIGHT+ heroes.size()+ "Cards"+ConsoleColors.RESET);
 
         for (int i = 0; i <heroes.size() ; i++) {
             System.out.println("\u2606 \n"+(i+1)+")"+ConsoleColors.PURPLE_BRIGHT+"Name: "+ConsoleColors.RESET+heroes.get(i).Name);
@@ -243,7 +240,7 @@ try {
 
         ArrayList<Cards> heroes = player.MyCardsArrayList;
         System.out.println("You have "+ConsoleColors.GREEN+ heroes.size()+ConsoleColors.RESET+" cards in your hand");
-
+        System.out.println(ConsoleColors.BLUE_BRIGHT+ heroes.size()+ "Cards"+ConsoleColors.RESET);
         for (int i = 0; i <heroes.size() ; i++) {
             System.out.println("\u2606 \n"+(i+1)+")"+ConsoleColors.PURPLE_BRIGHT+"Name: "+ConsoleColors.RESET+heroes.get(i).Name);
             System.out.println(ConsoleColors.PURPLE_BRIGHT+"Mana: "+ConsoleColors.RESET+heroes.get(i).Mana);
@@ -286,7 +283,7 @@ try {
                 break;
             case 2:
                 System.out.println(ConsoleColors.BLUE_BOLD_BRIGHT+" Which one do you want to remove?( 0 for Exit-a)");
-                ans=getAnswer(player.MyCardNamesArrayList.size());
+                ans=getAnswer(player.MyCardsArrayList.size());
                 if (ans==0) Menu(player);
                 player.AddMyCard(player.MyCardsArrayList.get(ans-1));
                 break;
@@ -298,6 +295,7 @@ try {
 
         ArrayList<Cards> heroes = collectionsforNcards(player);
         System.out.println("You have "+ConsoleColors.GREEN+ heroes.size()+ConsoleColors.RESET+"  available cards NOT in your hand");
+        System.out.println(ConsoleColors.BLUE_BRIGHT+ heroes.size()+ "Cards"+ConsoleColors.RESET);
         for (int i = 0; i <heroes.size() ; i++) {
             System.out.println("\u2606 \n"+(i+1)+")"+ConsoleColors.PURPLE_BRIGHT+"Name: "+ConsoleColors.RESET+heroes.get(i).Name);
             System.out.println(ConsoleColors.PURPLE_BRIGHT+"Mana: "+ConsoleColors.RESET+heroes.get(i).Mana);
@@ -325,7 +323,7 @@ try {
 
 
     static void Menu(Player player) throws IOException {
-    System.out.println(ConsoleColors.BLUE_BRIGHT+"Menu: \n");
+    System.out.println(ConsoleColors.BLUE_BRIGHT+"     Menu: ");
     System.out.println(ConsoleColors.RED+"0-Exit and SignOut  ");
     System.out.println(ConsoleColors.RESET+"1-Collections ");
     System.out.println("2-Store ");
@@ -336,6 +334,7 @@ try {
 
         switch (getAnswer(6)){
         case 0:
+            player.log.Write("LogOut","");
             Sign();
         case 1:
             collections(player);
@@ -347,26 +346,29 @@ try {
             Hero(player);
             break;
         case 4:
-            System.out.println("You have "+ player.Gems +"Gems!\n");
+            System.out.println(ConsoleColors.BLUE_BRIGHT+"     Wallet: "+ConsoleColors.RESET);
+            System.out.println("You have "+ ConsoleColors.RED+player.Gems +ConsoleColors.RESET+" Gems!\n");
+            Menu(player);
             break;
         case 5:
             Delete(player);
+            Sign();
             break;
         case 6:
-            System.out.println(ConsoleColors.GREEN+"Help:"+ConsoleColors.RESET);
+            System.out.println(ConsoleColors.GREEN+"Help:"+ConsoleColors.GREEN_BOLD);
             System.out.println("Collection : you can add cards to you deck or remove from that");
             System.out.println("Store: you can buy or sell cards with your gems");
             System.out.println("Hero: you can add new Hero or change the current Hero");
             System.out.println("Wallet: you can see how many gems you have,at first you have 50 gems ");
-            System.out.println("Delete: you can delete your account :( ");
+            System.out.println("Delete: you can delete your account :( \n"+ConsoleColors.RESET);
             Menu(player);
             break;
      }
     }
     static void Store(Player player) throws IOException {
-        System.out.println(ConsoleColors.GREEN+"$ STORE $");
+        System.out.println(ConsoleColors.GREEN+"     $ STORE $");
         System.out.println(ConsoleColors.RESET+"Buy or Sell?");
-        System.out.println("0-Exit-a ");
+        System.out.println(ConsoleColors.RED+"0-Exit "+ConsoleColors.RESET);
         System.out.println("1-Wallet ");
         System.out.println("2-Buy ");
         System.out.println("3-Sell ");
@@ -376,7 +378,9 @@ try {
                 Menu(player);
                 return;
             case 1:
-                System.out.println("You have "+ player.Gems +"Gems!\n");
+                System.out.println(ConsoleColors.BLUE_BRIGHT+"     Wallet: "+ConsoleColors.RESET);
+                System.out.println("You have "+ ConsoleColors.RED+player.Gems +ConsoleColors.RESET+" Gems!\n");
+                Menu(player);
                 break;
             case 2:
                 Buy(player);
@@ -396,31 +400,27 @@ try {
     }
     public static void Buy(Player player) throws IOException {
         System.out.println("Available cards for buy");
-        int j=0;
-        for (int i = 0; i <Cards.allCards.size(); i++) {
-            while (player.MyCardNamesArrayList.contains(Cards.allCards.get(i).Name)){
-                i++;
-            }
-            j++;
-            System.out.println("\u2606 \n"+(j)+")"+ConsoleColors.PURPLE_BRIGHT+"Name: "+ConsoleColors.RESET+Cards.allCards.get(i).Name);
-            System.out.println(ConsoleColors.GREEN+"Cost: "+ConsoleColors.RESET+Cards.allCards.get(i).cost);
-            System.out.println(ConsoleColors.PURPLE_BRIGHT+"Mana: "+ConsoleColors.RESET+Cards.allCards.get(i).Mana);
-            System.out.println(ConsoleColors.PURPLE_BRIGHT+"Rarity: "+ConsoleColors.RESET+Cards.allCards.get(i).rarity);
-            System.out.println(ConsoleColors.PURPLE_BRIGHT+"Class: "+ConsoleColors.RESET+Cards.allCards.get(i).CardClass);
-            System.out.println(ConsoleColors.PURPLE_BRIGHT+"Type: "+ConsoleColors.RESET+Cards.allCards.get(i).type);
-            if (!Cards.allCards.get(i).type.equals(Type.Spell))
-                System.out.println(ConsoleColors.PURPLE_BRIGHT+"Attack: "+ConsoleColors.RESET+Cards.allCards.get(i).attack);
-            if (Cards.allCards.get(i).type.equals(Type.Weapons))
-                System.out.println(ConsoleColors.PURPLE_BRIGHT+"Durability: "+ConsoleColors.RESET+Cards.allCards.get(i).Durability);
-            if (Cards.allCards.get(i).type.equals(Type.Minion))
-                System.out.println(ConsoleColors.PURPLE_BRIGHT+"HP: "+ConsoleColors.RESET+Cards.allCards.get(i).HP);
-            System.out.println(ConsoleColors.PURPLE_BRIGHT+"Description: "+ConsoleColors.RESET+Cards.allCards.get(i).Description);
+
+        for (int i = 0; i <collectionsforNcards(player).size(); i++) {
+            System.out.println("\u2606 \n"+(i+1)+")"+ConsoleColors.PURPLE_BRIGHT+"Name: "+ConsoleColors.RESET+collectionsforNcards(player).get(i).Name);
+            System.out.println(ConsoleColors.GREEN+"Cost: "+ConsoleColors.RESET+collectionsforNcards(player).get(i).cost);
+            System.out.println(ConsoleColors.PURPLE_BRIGHT+"Mana: "+ConsoleColors.RESET+collectionsforNcards(player).get(i).Mana);
+            System.out.println(ConsoleColors.PURPLE_BRIGHT+"Rarity: "+ConsoleColors.RESET+collectionsforNcards(player).get(i).rarity);
+            System.out.println(ConsoleColors.PURPLE_BRIGHT+"Class: "+ConsoleColors.RESET+collectionsforNcards(player).get(i).CardClass);
+            System.out.println(ConsoleColors.PURPLE_BRIGHT+"Type: "+ConsoleColors.RESET+collectionsforNcards(player).get(i).type);
+            if (!collectionsforNcards(player).get(i).type.equals(Type.Spell))
+                System.out.println(ConsoleColors.PURPLE_BRIGHT+"Attack: "+ConsoleColors.RESET+collectionsforNcards(player).get(i).attack);
+            if (collectionsforNcards(player).get(i).type.equals(Type.Weapons))
+                System.out.println(ConsoleColors.PURPLE_BRIGHT+"Durability: "+ConsoleColors.RESET+collectionsforNcards(player).get(i).Durability);
+            if (collectionsforNcards(player).get(i).type.equals(Type.Minion))
+                System.out.println(ConsoleColors.PURPLE_BRIGHT+"HP: "+ConsoleColors.RESET+collectionsforNcards(player).get(i).HP);
+            System.out.println(ConsoleColors.PURPLE_BRIGHT+"Description: "+ConsoleColors.RESET+collectionsforNcards(player).get(i).Description);
             System.out.println("");
         }
         System.out.println("Which one do you want to buy?");
-        int ans =getAnswer(j);
+        int ans =getAnswer(collectionsforNcards(player).size());
         if (ans==0) Menu(player);
-        if (player.MyCardNamesArrayList.contains(Cards.allCards.get(ans-1).Name)){
+        if (player.MyCardsArrayList.contains(collectionsforNcards(player).get(ans-1).Name)){
             System.out.println("You have that one !");
         }
         Shop.Buy(player,Cards.allCards.get(ans-1));
@@ -463,8 +463,8 @@ try {
 
     }
     public static void Hero(Player player) throws IOException {
-        System.out.println(ConsoleColors.RESET+"Hero Setting: \n");
-        System.out.println(ConsoleColors.RED+"0-Exit and SignOut  ");
+        System.out.println(ConsoleColors.BLUE_BRIGHT+"     Hero Setting: ");
+        System.out.println(ConsoleColors.RED+"0-exit ");
         System.out.println(ConsoleColors.RESET+"1-Available Heroes ");
         System.out.println("2-Current Hero ");
         System.out.println("3-Choose Hero ");
@@ -472,47 +472,60 @@ try {
 
         switch (getAnswer(4)){
             case 0:
-                EXIT();
+                Menu(player);
             case 1:
-                for (HeroName a:player.AvailableHeroesNames) {
-                    System.out.println(ConsoleColors.BLUE_BRIGHT+a+ConsoleColors.RESET);
-                    switch (a){
+                for (Heroes a:player.AvailableHeroes) {
+                    System.out.println(ConsoleColors.BLUE_BRIGHT+a.name+ConsoleColors.RESET);
+                    switch (a.name){
                         case Rogue:
-                            System.out.println("She pays 2 Manas less than others for Spell cards");
+                            System.out.println("She pays 2 Manas less than others for Spell cards");break;
                         case Mage:
-                            System.out.println("He is thief! and he pays 2 Manas less than others for stolen cards");
+                            System.out.println("He is thief! and he pays 2 Manas less than others for stolen cards");break;
                         case Warlock:
-                            System.out.println("He is brave and dedicated, he has 35 HP (others have 30)");
+                            System.out.println("He is brave and dedicated, he has 35 HP (others have 30)");break;
                     }
+                    System.out.println("");
                 }
                 Hero(player);
                 break;
             case 2:
-                    System.out.println("Current Hero is "+ConsoleColors.BLUE_BRIGHT+player.CurrentHeroName+ConsoleColors.RESET);
+                System.out.println("Current Hero is "+ConsoleColors.BLUE_BRIGHT+player.CurrentHero.name+ConsoleColors.RESET);
+                System.out.println("");
+                Hero(player);
                 break;
             case 3:
-                System.out.println("Which hero you want to choose?");
+                System.out.println(ConsoleColors.BLUE_BRIGHT+"Which hero you want to choose?");
+                System.out.println(ConsoleColors.GREEN+"0 for exit-a");
                 int i=0;
-                for (HeroName a:player.AvailableHeroesNames) {
+                for (Heroes a:player.AvailableHeroes) {
                     i++;
-                    System.out.println(ConsoleColors.RED +i+")"+ ConsoleColors.RESET+ a );
+                    System.out.println(ConsoleColors.RED +i+")"+ ConsoleColors.RESET+ a.name );
+                    System.out.println("");
                 }
-                Hero(player);
-
+                int ans=getAnswer(i);
+                if (ans==0){Hero(player);}
+                else {
+                    player.CurrentHero=player.AvailableHeroes.get(i-1);
+                    Hero(player);
+                }
                 break;
             case 4:
-                System.out.println(ConsoleColors.GREEN+"Help:"+ConsoleColors.RESET);
+                System.out.println(ConsoleColors.GREEN+"Help:");
                 System.out.println("Available Heroes : you can see your available heroes");
                 System.out.println("Current Hero: you can see the current Hero");
-                System.out.println("Choose Hero: you can change the current Hero ");
+                System.out.println("Choose Hero: you can change the current Hero "+ConsoleColors.RESET);
                 Hero(player);
                 break;
         }
 
     }
     public static void Delete(Player player) throws IOException {
-        System.out.println("Enter your password for deleting your account");
+        System.out.println(ConsoleColors.BLUE_BRIGHT+"     Delete Account");
+        System.out.println(ConsoleColors.GREEN+"Help:");
+        System.out.println("Enter your password to DELETE your account \n If you want to go back to Menu you can type \"Menu\" instead ");
+        System.out.println(ConsoleColors.RESET+"Password:");
         String password =getAnswer("Password");
+        if (password.equalsIgnoreCase("Menu"))Menu(player);
         while (!Logs.PassCheck(player.UserName,password))
             password =getAnswer("Password");
         player.delete();
