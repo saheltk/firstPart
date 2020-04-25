@@ -4,27 +4,23 @@ import Cards.Cards;
 import Cards.Type;
 import Heroes.HeroName;
 import Heroes.Heroes;
-import Log.ConsoleColors;
 import Log.Logs;
-import Log.Shop;
+import Shop.Shop;
 import Player.Player;
 import Player.PlayersFactory;
 
-import java.io.Console;
+
 import java.io.IOException;
-import java.lang.management.PlatformLoggingMXBean;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 public class CLI {
 
     public static void main(String[] args) throws IOException {
         Player.setUp();
-        Cards.CLI();
+        Cards.();
         Scanner s = new Scanner(System.in);
         System.out.println(ConsoleColors.BLUE_BOLD + " Welcome to ");
         System.out.println("            \u2694 HEARTHSTONE \u2694 \n");
@@ -187,7 +183,7 @@ try {
         System.out.println(ConsoleColors.RESET+"1-Available Cards ");
         System.out.println("2-My Cards  ");
         System.out.println("3-Not My Cards ");
-        System.out.println("3-Help ");
+        System.out.println("4-Help ");
 
         switch (getAnswer(4)){
             case 0:
@@ -474,6 +470,8 @@ try {
             case 0:
                 Menu(player);
             case 1:
+                player.log.Write("Heroes","Availables");
+
                 for (Heroes a:player.AvailableHeroes) {
                     System.out.println(ConsoleColors.BLUE_BRIGHT+a.name+ConsoleColors.RESET);
                     switch (a.name){
@@ -489,6 +487,8 @@ try {
                 Hero(player);
                 break;
             case 2:
+                player.log.Write("Heroes","My Heroes");
+
                 System.out.println("Current Hero is "+ConsoleColors.BLUE_BRIGHT+player.CurrentHero.name+ConsoleColors.RESET);
                 System.out.println("");
                 Hero(player);
@@ -506,6 +506,8 @@ try {
                 if (ans==0){Hero(player);}
                 else {
                     player.CurrentHero=player.AvailableHeroes.get(i-1);
+                    player.log.Write("Heroes","Current Hero:"+player.AvailableHeroes.get(i-1).name);
+
                     Hero(player);
                 }
                 break;
@@ -531,8 +533,4 @@ try {
         player.delete();
     }
 
-
-    static void EXIT(){
-
-    }
 }
