@@ -17,7 +17,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class CLI {
-
+/*
     public static void main(String[] args) throws IOException {
         Player.setUp();
         Cards.();
@@ -532,5 +532,5 @@ try {
             password =getAnswer("Password");
         player.delete();
     }
-
+*/
 }

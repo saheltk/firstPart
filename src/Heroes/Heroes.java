@@ -168,7 +168,7 @@ public class Heroes {
     }
 
     public void attack(Player player, Cards c) {
-        player.CurrentHero.HP -= attack;
+        player.getCurrentHero().HP -= attack;
 
     }
 

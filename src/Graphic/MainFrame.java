@@ -1,23 +1,26 @@
 package Graphic;
 
+import Constants.Constants;
+
 import javax.swing.*;
+import java.awt.*;
 
 public class MainFrame extends JFrame {
-    private PanelController panelController;
+    private MainPanel mainPanel;
 
-    public void setPanel(Panels.PanelNames panelName) {
-        if (panel!=null)
-        remove(panel);
-        this.panel = new Panels(panelName);
-        add(panel );
+    public void setPanel(PanelController.PanelNames panelName) {
+        PanelController.changePanel(panelName);
     }
 
     public MainFrame() {
         super("HEARTHSTONE");
-        setPanel(Panels.PanelNames.login);
+        mainPanel= MainPanel.get();
+        add(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(700,800);
-        this.setVisible(true);
+        setSize(Constants.width,Constants.height);
+        setMaximumSize(new Dimension(Constants.width,Constants.height));
+        setVisible(true);
+        validate();
     }
 
     public static void main(String[] args) {
