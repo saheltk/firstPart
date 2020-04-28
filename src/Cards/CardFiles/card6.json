@@ -1,10 +1,10 @@
 {
-  "Name": "THe Great Loyal",
-  "Mana": 3,
+  "name": "The Great Loyal",
+  "mana": 3,
   "rarity": "Rare",
-  "CardClass": "Warlock",
+  "cardClass": "Warlock",
   "type": "Minion",
-  "Description": "If you dont use him in your turn , he will gain one extra HP till it gets 6",
+  "description": "If you dont use him in your turn , he will gain one extra HP till it gets 6",
   "HP": 3,
   "attack": 3
 }

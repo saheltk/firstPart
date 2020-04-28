@@ -1,8 +1,8 @@
 {
-  "Name": "Healing Touch",
-  "Mana": 3,
+  "name": "Healing Touch",
+  "mana": 3,
   "rarity": "Common",
-  "CardClass": "Natural",
+  "cardClass": "Natural",
   "type": "Spell",
-  "Description": " Restore 8 Health "
+  "description": " Restore 8 Health "
 }

@@ -1,10 +1,10 @@
 {
-  "Name": "Big Brother",
-  "Mana": 7,
+  "name": "Big Brother",
+  "mana": 7,
   "rarity": "Legendary",
-  "CardClass": "Natural",
+  "cardClass": "Warlock",
   "type": "Minion",
-  "Description": " So strong! ",
+  "description": " So strong! ",
   "HP": 10,
   "attack": 10
 }

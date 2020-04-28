@@ -1,19 +1,22 @@
 package Graphic.Panels;
 
+import Command.Contoller;
+import Command.LoginCheck;
 import Constants.Constants;
-import Graphic.MainPanel;
+import Graphic.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 
-public class Login extends MainPanel {
+public class Login extends GamePanel {
     private static Login login;
-    Dimension dimension;
     private String backgroundFileName;
     private String buttonPath = "src\\Graphic\\Buttons\\";
 
@@ -31,8 +34,11 @@ public class Login extends MainPanel {
     private JTextField signUpUsernameFeild;
     private JTextField signUpPasswordFeild;
 
+    private String username;
+    private String password;
 
-    public Login() {
+
+    private Login() {
         super();
         backgroundFileName = Constants.loginBackgroundFileName;
         setLayout(new GridBagLayout());
@@ -42,6 +48,11 @@ public class Login extends MainPanel {
         setGridBagConstraints();
 
         validate();
+    }
+    public static Login loginPanel() {
+        if (login == null)
+            login = new Login();
+        return login;
     }
 
     @Override
@@ -55,6 +66,26 @@ public class Login extends MainPanel {
             signInButton.setBackground(Color.BLACK);
             signInButton.setBorderPainted(false);
             signInButton.setContentAreaFilled(false);
+            signInButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    username=signInUsernameFeild.getText();
+                    password=signInPasswordFeild.getText();
+                    LoginCheck.LoginResultCondition check= LoginCheck.check(username,password, LoginCheck.LoginCondition.SignIn);
+                    switch (check){
+                        case SignIn:
+                            ButtonController login= new ButtonController(ButtonController.ButtonOptions.SignIn);
+                            MainPanel.setPanel("menu");
+                            break;
+                        case WrongPassWord:
+                            JOptionPane.showMessageDialog(Login.loginPanel(),"Wrong PassWord, please try again!","WRONG PASSWORD",JOptionPane.ERROR_MESSAGE);
+                            break;
+                        case UsernameNotFound:
+                            JOptionPane.showMessageDialog(Login.loginPanel(),"Wrong Username, please try again!","WRONG USERNAME",JOptionPane.ERROR_MESSAGE);
+                            break;
+                    }
+                }
+            });
 
 
             //SignUp
@@ -65,14 +96,30 @@ public class Login extends MainPanel {
             signUpButton.setBackground(Color.BLACK);
             signUpButton.setBorderPainted(false);
             signUpButton.setContentAreaFilled(false);
+            signUpButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    username=signUpUsernameFeild.getText();
+                    password=signUpPasswordFeild.getText();
+                    LoginCheck.LoginResultCondition check= LoginCheck.check(username,password, LoginCheck.LoginCondition.SignUp);
+                    switch (check){
+                        case SignUp:
+                            ButtonController login= new ButtonController(ButtonController.ButtonOptions.SignUp);
+                            MainPanel.setPanel("menu");
+                            break;
+                        case TemporaryUsername:
+                            JOptionPane.showMessageDialog(Login.loginPanel(),"Temporary Username, please try again!","TEMPORARY USERNAME",JOptionPane.ERROR_MESSAGE);
+                            break;
+                    }
+                }
+            });
 
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-
+    @Override
     protected void setLabels() {
         //SignIn
         signInUsername = new JLabel("Username: ");
@@ -95,9 +142,8 @@ public class Login extends MainPanel {
         signUpPasswordFeild = new JTextField(10);
 
     }
-
-
-    public void setGridBagConstraints() {
+    @Override
+    protected void setGridBagConstraints() {
 
 
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
@@ -153,10 +199,5 @@ public class Login extends MainPanel {
         SwingUtilities.updateComponentTreeUI(backgroundLabel);
     }
 
-    public static Login loginPanel() {
-        if (login == null)
-            login = new Login();
-        return login;
-    }
 
 }

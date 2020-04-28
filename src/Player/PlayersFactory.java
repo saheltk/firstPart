@@ -9,14 +9,10 @@ import java.util.ArrayList;
 public class PlayersFactory {
     private static ArrayList<Player> allPlayers = new ArrayList<>();
 
-    PlayersFactory(){
-        // File fileSave= new File("C:\Users\Sahel\IdeaProjects\fisrtPart\src\saving");
-        //   ObjectMapper om =  new ObjectMapper(fileSave);
-    }
+    private PlayersFactory(){ }
 
     public static void add(Player player){ allPlayers.add(player); }
     public static void remove(Player player){ allPlayers.remove(player); }
-
 
     public static Player find(String name){
         for (Player player: allPlayers ) {
@@ -26,9 +22,15 @@ public class PlayersFactory {
         return null;
     }
     public static boolean passCheck(String Name, String Pass) {
-        if (find(Name).getPassword().equals(Pass))
-            return true;
-        System.out.println("Invalid Password");
+        try {
+            if (find(Name).getPassword().equals(Pass))
+                return true;
+            System.out.println("Invalid Password");
+        }
+        catch (Exception e){
+            return false;
+        }
+
         return false;
 
     }

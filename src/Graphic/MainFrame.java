@@ -1,6 +1,9 @@
 package Graphic;
 
+import Cards.Cards;
 import Constants.Constants;
+import Log.Logs;
+import Player.Player;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,9 +11,6 @@ import java.awt.*;
 public class MainFrame extends JFrame {
     private MainPanel mainPanel;
 
-    public void setPanel(PanelController.PanelNames panelName) {
-        PanelController.changePanel(panelName);
-    }
 
     public MainFrame() {
         super("HEARTHSTONE");
@@ -23,7 +23,5 @@ public class MainFrame extends JFrame {
         validate();
     }
 
-    public static void main(String[] args) {
-        MainFrame mainFrame = new MainFrame();
-    }
+
 }

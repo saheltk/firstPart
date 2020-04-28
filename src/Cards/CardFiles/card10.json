@@ -1,10 +1,10 @@
 {
-  "Name": "Glaivezooka",
-  "Mana": 2,
+  "name": "Glaivezooka",
+  "mana": 2,
   "rarity": "Common",
-  "CardClass": "Natural",
+  "cardClass": "Natural",
   "type": "Weapons",
-  "Description": " Battlecry: Give a random friendly Minion +1 attack",
+  "description": " Battlecry: Give a random friendly Minion +1 attack",
   "attack": 2,
-  "Durability": 2
+  "durability": 2
 }

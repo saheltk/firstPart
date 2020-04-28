@@ -1,6 +1,7 @@
 package Graphic;
 
 import Graphic.Panels.Login;
+import Graphic.Panels.Menu;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,8 +13,7 @@ public class PanelController {
         mainPanel= MainPanel.get();
     }
 
-    public static void changePanel(PanelNames name) {
-        mainPanel.setLayout(new BorderLayout());
+    public static void changePanel(MainPanel.PanelName name) {
 
         switch (name) {
             case play:
@@ -29,21 +29,15 @@ public class PanelController {
                // mainPanel = Collection.collectionPanel();
                 break;
             case menu:
-               // mainPanel = Menu.menuPanel();
+                System.out.println("menu");
+                mainPanel = Menu.menuPanel();
                 break;
             case login:
-                mainPanel = Login.loginPanel();
+                MainPanel.setPanel("login");
                 break;
 
         }
     }
 
-    protected enum PanelNames {
-        play,
-        shop,
-        status,
-        collection,
-        menu,
-        login
-    }
+
 }

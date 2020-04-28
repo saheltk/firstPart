@@ -1,56 +1,56 @@
 package Graphic;
 
-import Constants.Constants;
-import Graphic.Panels.Login;
+import Graphic.Panels.*;
+import Graphic.Panels.Menu;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
+import java.util.Collection;
 
-public abstract class MainPanel extends JPanel {
-    private static MainPanel mainPanel;
-    Dimension dimension;
-    GridBagConstraints gridBagConstraints;
-    protected JLabel backgroundLabel;
+public class MainPanel extends JPanel {
+    private static final String LOGIN = "login";
+    private static final String MENU = "menu" ;
+    private static final String SHOP = "shop";
+    private static final String STATUS = "status" ;
+    private static final String COLLECTIONS = "collections";
+    private static final String SETTING = "setting" ;
 
-    protected MainPanel() {
+    private  static MainPanel mainPanel;
+    private static CardLayout cardLayout ;
 
+
+    private  MainPanel(){
+
+        cardLayout = new CardLayout();
+        setLayout(cardLayout);
+        add(Login.loginPanel(),LOGIN);
+        add(Menu.menuPanel(),MENU);
+        add(Shop.shopPanel(),SHOP);
+        add(Status.statusPanel(),STATUS);
+        //add(Login.loginPanel(),SETTING);
+        add(Collections.collectionsPanel(),COLLECTIONS);
     }
 
-    protected void setButtons() {
+    public static void setPanel(String panelName){
+        cardLayout.show(mainPanel,panelName);
     }
+
 
     public static MainPanel get() {
-        if (mainPanel == null) mainPanel = new Login();
+        if (mainPanel==null){
+            mainPanel= new MainPanel();
+            setPanel("login");
+        }
         return mainPanel;
     }
 
-    protected void setBackGround(String filename) {
-        String path = "src\\Graphic\\Backgrounds\\"+filename;
-        try {
-            //Image
-            File backgroundFile = new File(path);
-            BufferedImage backgroundBufferedImage= ImageIO.read(backgroundFile);
-            //add Image
-            backgroundLabel = new JLabel();
-            backgroundLabel.setIcon(new ImageIcon(backgroundBufferedImage));
-            backgroundLabel.setBounds(0,0, Constants.width,Constants.height);
-
-            backgroundLabel.setVisible(true);
-            backgroundLabel.setLayout(new GridBagLayout());
-            backgroundLabel.setBackground(Color.BLACK);
-
-            validate();
-            add(backgroundLabel);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    public enum PanelName {
+        play,
+        shop,
+        status,
+        collection,
+        menu,
+        login
     }
 
 }

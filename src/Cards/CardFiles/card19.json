@@ -1,8 +1,8 @@
 {
-  "Name": "Savage Roar",
-  "Mana": 3,
+  "name": "Savage Roar",
+  "mana": 3,
   "rarity": "Rare",
-  "CardClass": "Natural",
+  "cardClass": "Rogue",
   "type": "Spell",
-  "Description": " Give your characters +2 attack this turn  "
+  "description": " Give your characters +2 attack this turn  "
 }

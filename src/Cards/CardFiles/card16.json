@@ -1,10 +1,10 @@
 {
-  "Name": "Baby Loyal",
-  "Mana": 2,
+  "name": "Baby Loyal",
+  "mana": 2,
   "rarity": "Epic",
-  "CardClass": "Natural",
+  "cardClass": "Warlock",
   "type": "Minion",
-  "Description": " Taunt! ",
+  "description": " Taunt! ",
   "HP": 1,
   "attack": 2
 }

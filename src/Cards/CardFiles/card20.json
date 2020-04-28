@@ -1,8 +1,8 @@
 {
-  "Name": "Rich Guy",
-  "Mana": 1,
+  "name": "Rich Guy",
+  "mana": 1,
   "rarity": "Common",
-  "CardClass": "Natural",
+  "cardClass": "Rogue",
   "type": "Spell",
-  "Description": " adds 3 Manna "
+  "description": " adds 3 Manna "
 }

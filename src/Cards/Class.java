@@ -1,8 +1,13 @@
 package Cards;
 
 public enum Class {
+    Free,
     Mage,
     Rogue,
     Warlock,
-    Natural
+    Natural,
+    Hunter,
+    Priest,
+
+
     }

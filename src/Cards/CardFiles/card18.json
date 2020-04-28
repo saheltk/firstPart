@@ -1,10 +1,10 @@
 {
-  "Name": "Die Hard",
-  "Mana": 4,
+  "name": "Die Hard",
+  "mana": 4,
   "rarity": "Epic",
-  "CardClass": "Natural",
+  "cardClass": "Rogue",
   "type": "Minion",
-  "Description": " Die-Hard dies hard! ",
+  "description": " Die-Hard dies hard! ",
   "HP": 10,
   "attack": 1
 }

@@ -1,8 +1,8 @@
 {
-  "Name": "Barrel Toss",
-  "Mana": 1,
+  "name": "Barrel Toss",
+  "mana": 1,
   "rarity": "Rare",
-  "CardClass": "Natural",
+  "cardClass": "Natural",
   "type": "Spell",
-  "Description": " Deal 2 damage "
+  "description": " Deal 2 damage "
 }

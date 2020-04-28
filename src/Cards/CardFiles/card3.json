@@ -1,8 +1,8 @@
 {
-  "Name": "Friendly Smith",
-  "Mana": 1,
+  "name": "Friendly Smith",
+  "mana": 1,
   "rarity": "Common",
-  "CardClass": "Rogue",
+  "cardClass": "Rogue",
   "type": "Spell",
-  "Description": " adds 1 weapon to your cards with increasing it's attack and live 2 points "
+  "description": " Discover a weapon from any class. Add it to your Adventure Deck with +2/+2."
 }

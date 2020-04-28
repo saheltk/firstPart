@@ -1,8 +1,8 @@
 {
-  "Name": "Polymorph",
-  "Mana": 4,
+  "name": "Polymorph",
+  "mana": 4,
   "rarity": "Rare",
-  "CardClass": "Mage",
+  "cardClass": "Mage",
   "type": "Spell",
-  "Description": " aTransform minion to 1/1 Minion(Sheep) "
+  "description": " Transform a minion into a 1/1 Sheep. "
 }

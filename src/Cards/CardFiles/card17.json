@@ -1,8 +1,8 @@
 {
-  "Name": "Kind Nurse",
-  "Mana": 2,
+  "name": "Kind Nurse",
+  "mana": 2,
   "rarity": "Common",
-  "CardClass": "Natural",
+  "cardClass": "Warlock",
   "type": "Spell",
-  "Description": " add +2 HP to only one character  "
+  "description": " add +2 HP to only one character  "
 }

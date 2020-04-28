@@ -1,8 +1,8 @@
 {
-  "Name": "Kind Spell",
-  "Mana": 2,
+  "name": "Kind Spell",
+  "mana": 2,
   "rarity": "Rare",
-  "CardClass": "Mage",
+  "cardClass": "Mage",
   "type": "Spell",
-  "Description": " Your enemy will give you a cart from his cards by his own desire"
+  "description": " Your enemy will give you a card by his own desire"
 }

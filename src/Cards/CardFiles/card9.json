@@ -1,10 +1,10 @@
 {
-  "Name": "Candleshot",
-  "Mana": 1,
+  "name": "Candleshot",
+  "mana": 1,
   "rarity": "Common",
-  "CardClass": "Natural",
+  "cardClass": "Natural",
   "type": "Weapons",
-  "Description": " Your hero is immune while attacking ",
+  "description": " Your hero is immune while attacking ",
   "attack": 1,
-  "Durability": 3
+  "durability": 3
 }

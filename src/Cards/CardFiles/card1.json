@@ -1,10 +1,10 @@
 {
-  "Name": "Dreadscale",
-  "Mana": 3,
+  "name": "Dreadscale",
+  "mana": 3,
   "rarity": "Legendary",
-  "CardClass": "Warlock",
+  "cardClass": "Warlock",
   "type": "Minion",
-  "Description": " 1 Damage to all Minions despite himself",
+  "description": " At the end of your turn, deal 1 damage to all other minions.",
   "HP": 2,
   "attack": 4
 }

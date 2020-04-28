@@ -1,10 +1,10 @@
 {
-  "Name": "Sheep",
-  "Mana": 0,
+  "name": "Sheep",
+  "mana": 0,
   "rarity": "Common",
-  "CardClass": "Natural",
+  "cardClass": "Natural",
   "type": "Minion",
-  "Description": " just a sheep nothing special about :( ",
+  "description": " just a sheep nothing special about it :( ",
   "HP": 1,
   "attack": 1
 }

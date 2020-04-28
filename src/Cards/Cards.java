@@ -13,6 +13,7 @@ public class Cards {
     private Type type;
     private int cost = 0;
     private String description;
+    private int id;
 
     //minion
     public int HP = 0;
@@ -24,7 +25,7 @@ public class Cards {
 
 
     static FileReader[] file = new FileReader[Constants.cardNumbers];
-    static Cards[] cards = new Cards[Constants.cardNumbers];
+    public static Cards[] cards = new Cards[Constants.cardNumbers];
 
 
     public Cards() {}
@@ -41,6 +42,7 @@ public class Cards {
     //Getters
     public String getName() { return name; }
     public int getMana() { return mana; }
+    public int getId() { return id; }
     public Rarity getRarity() { return rarity; }
     public Class getCardClass() { return cardClass; }
     public Type getType() { return type; }
@@ -79,14 +81,15 @@ public class Cards {
         return answer;
     }
 
-    private static void setCards(){
+    public static void setCards(){
         ObjectMapper objectMapper = new ObjectMapper();
         String address ="src\\Cards\\CardFiles\\card";
         try {
             for (int i = 0; i < Constants.cardNumbers; i++) {
-                file[i] = new FileReader(address + i + ".json");
+                file[i] = new FileReader(address + (i+1) + ".json");
                 cards[i] = objectMapper.readValue(file[i], Cards.class);
                 cards[i].set();
+                cards[i].id=i;
             }
         }
         catch (Exception e){
@@ -100,11 +103,7 @@ public class Cards {
         try {
             for (int i = 0; i < 20; i++) {
                 if (cards[i].name.equalsIgnoreCase(name)) {
-                    answer = new Cards(name, cards[i].mana, cards[i].rarity, cards[i].cardClass, cards[i].type, cards[i].description);
-                    answer.cost = cards[i].cost;
-                    answer.HP = cards[i].HP;
-                    answer.durability = cards[i].durability;
-                    answer.attack = cards[i].attack;
+                    answer = cards[i];
                 }
             }
             return answer;
