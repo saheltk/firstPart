@@ -18,6 +18,7 @@ public class MainFrame extends JFrame {
         add(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(Constants.width,Constants.height);
+        setResizable(false);
         setMaximumSize(new Dimension(Constants.width,Constants.height));
         setVisible(true);
         validate();

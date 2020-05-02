@@ -1,11 +1,13 @@
 package Cards;
 
+import Command.Contoller;
 import Graphic.MainPanel;
 import Heroes.Heroes;
 import Player.Player;
 import Cards.Cards;
 
 import javax.swing.*;
+import java.io.CharArrayReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -27,6 +29,7 @@ public class Deck {
     }
 
     //Setter
+    public void setName(String name){ this.name=name;}
     public void setHero(Heroes hero) { this.hero = hero; }
     public void setCards(ArrayList<Cards> allCards) { this.allCards = allCards; }
     public void setWins(int wins) { this.wins = wins; }
@@ -35,6 +38,7 @@ public class Deck {
         int sum = 0;
         if (allCards!=null && allCards.size()!=0){
         for (Cards cards : allCards) {
+            if (cards!=null)
             sum += cards.getMana();
         }
         cost = (sum / allCards.size());}
@@ -52,6 +56,11 @@ public class Deck {
             mostCommon=null;
             return;
         }
+
+        if (allCards.size()==1){
+            mostCommon=allCards.get(0);
+            return;
+        }
         ArrayList<Cards> cardMax = new ArrayList<>();
         ArrayList<Cards> cardMax1 = new ArrayList<>();
         ArrayList<Cards> cardMax2 = new ArrayList<>();
@@ -59,8 +68,11 @@ public class Deck {
         int[] cardmax = new int[allCards.size()-1];
 
 
+
+
         for (int i = 0; i < allCards.size()-1; i++) {
             for (int j = i+1; j < allCards.size(); j++) {
+                if (allCards.get(i)!=null)
                 if (allCards.get(i).getName().equals(allCards.get(j).getName()))
                     cardmax[i]++;
             }
@@ -169,13 +181,14 @@ public class Deck {
     }
 
     //AllCardsControl
-    public void removeCard(Cards newCard) throws IOException {
+    public void removeCard(String newCard){
+        if (!allCards.contains(newCard))return;
         allCards.remove(newCard);
         setCost();
         setMostCommon();
     }
-    public void addCard(Cards newCard) throws IOException {
-        allCards.add(newCard);
+    public void addCard(String newCard)  {
+        allCards.add(Cards.createCardByName(newCard));
         setCost();
         setMostCommon();
     }

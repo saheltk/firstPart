@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 
 public class Heroes {
+
     private HeroName name;
     private int Mana;
     private int HP;
@@ -27,6 +28,7 @@ public class Heroes {
         HP = 30;
         this.SpecialPower();
     }
+
 
     //Getters
     public int getPrice() { return price; }
@@ -181,6 +183,9 @@ public class Heroes {
             if ((c.getType().equals(Type.Minion)) && c.HP <= 0) onBoardCards.remove(c);
             if (c.getType().equals(Type.Weapons) && c.durability <= 0) onBoardCards.remove(c);
         }
+    }
+    public String getName(){
+        return name.toString();
     }
 
 

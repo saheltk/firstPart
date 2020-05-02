@@ -13,6 +13,7 @@ public class MainPanel extends JPanel {
     private static final String SHOP = "shop";
     private static final String STATUS = "status" ;
     private static final String COLLECTIONS = "collections";
+    private static final String PLAY = "play";
     private static final String SETTING = "setting" ;
 
     private  static MainPanel mainPanel;
@@ -29,6 +30,7 @@ public class MainPanel extends JPanel {
         add(Status.statusPanel(),STATUS);
         //add(Login.loginPanel(),SETTING);
         add(Collections.collectionsPanel(),COLLECTIONS);
+        add(Play.playPanel(),PLAY);
     }
 
     public static void setPanel(String panelName){

@@ -27,6 +27,7 @@ public class Menu extends GamePanel {
     private JButton statusButton;
     private JButton collectionButton;
     private JButton settingButton;
+    private JButton playButton;
 
 
     private Menu() {
@@ -119,6 +120,24 @@ public class Menu extends GamePanel {
             });
 
 
+            //SETTING
+            File playFile = new File(buttonPath + "play.JPG");
+            BufferedImage playBufferedImage = ImageIO.read(playFile);
+            playButton = new JButton();
+            playButton.setIcon(new ImageIcon(playBufferedImage));
+            playButton.setBackground(Color.BLACK);
+            playButton.setBorderPainted(false);
+            playButton.setContentAreaFilled(false);
+            playButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Contoller.setGamePlay();
+                    ButtonController play = new ButtonController(ButtonController.ButtonOptions.Play);
+                    MainPanel.setPanel("play");
+                }
+            });
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -148,6 +167,10 @@ public class Menu extends GamePanel {
         backgroundLabel.add(settingButton,gridBagConstraints);
         gridBagConstraints.anchor=GridBagConstraints.LAST_LINE_END;
         backgroundLabel.add(collectionButton,gridBagConstraints);
+
+        gridBagConstraints.insets = new Insets(0, 0, 0, 15);
+        gridBagConstraints.anchor=GridBagConstraints.CENTER;
+        backgroundLabel.add(playButton,gridBagConstraints);
 
         validate();
         SwingUtilities.updateComponentTreeUI(backgroundLabel);

@@ -16,6 +16,7 @@ public class PlayersFactory {
 
     public static Player find(String name){
         for (Player player: allPlayers ) {
+            System.out.println(player.getUsername());
             if (player.getUsername().equals(name))
                 return player;
         }

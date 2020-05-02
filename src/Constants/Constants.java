@@ -8,6 +8,19 @@ public class Constants {
     public static final String loginBackgroundFileName="door.jpg";
     public static final String menuBackgroundFileName="box.jpg";
     public static final String backgroundFileName="simpleBackground.png";
+    public static final int mana=7;
 
 
+    private static int background=1;
+    private static int card=1;
+    private static String playBackgroundFileName="battleground"+background+".jpg";
+    private static String playCardFileName="card"+card+".png";
+
+    public static String getPlayBackgroundFileName() {
+        return playBackgroundFileName;
+    }
+
+    public static String getPlayCardFileName() {
+        return playCardFileName;
+    }
 }

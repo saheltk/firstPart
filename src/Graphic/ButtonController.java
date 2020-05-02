@@ -23,7 +23,7 @@ public class ButtonController {
         this.name = name;
         //setSound();
         setEvent();
-        Logs.write(player,name.toString(),description);
+        Logs.write(player,name.toString(),"");
         Contoller.getPlayer().update();
     }
 
@@ -34,6 +34,7 @@ public class ButtonController {
         //setSound();
         setEvent();
         Logs.write(player,name.toString(),description);
+        Contoller.getPlayer().update();
     }
 
     public static void SignInPlayer(String username) {
@@ -73,7 +74,22 @@ public class ButtonController {
         Collection,
         Setting,
         Sell,
-        Buy
+        Buy,
+        newDeck,
+        add_Card_To_Deck,
+        remove_Card_FromDeck,
+        edit_Deck_Name,
+        delete_Deck,
+        Choose_My_Cards,
+        Choose_All_Cards,
+        ChooseNot_My_Cards,
+        Choose_My_Decks,
+        Show_Card,
+        Play,
+        End_Turn,
+        Choose_Deck,
+
+
 
 
     }

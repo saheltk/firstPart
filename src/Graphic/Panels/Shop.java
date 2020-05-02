@@ -98,18 +98,20 @@ public class Shop extends GamePanel {
             cardShow = new JLabel();
             detail = new JTextArea();
 
+            if (Contoller.getPlayer() != null)
+                wallet.setText("Wallet: " + Contoller.getPlayer().getGems() + " Gems");
+
 
             DefaultComboBoxModel buyModel = new DefaultComboBoxModel();
             DefaultComboBoxModel sellModel = new DefaultComboBoxModel();
             cardSelection.setModel(buyModel);
 
-
-            for (int i = 0; i < Constants.cardNumbers; i++) {
-                buyModel.addElement(Cards.cards[i].getName());
-            }
+            if (Contoller.getPlayer() != null && Contoller.getPlayer().getMyCards().size() != 0)
+                for (int i = 0; i < Contoller.getPlayer().buyAvailable().size(); i++) {
+                    buyModel.addElement(Contoller.getPlayer().buyAvailable().get(i).getName());
+                }
 
             if (Contoller.getPlayer() != null && Contoller.getPlayer().getMyCards().size() != 0)
-
                 for (int i = 0; i < Contoller.getPlayer().getMyCards().size(); i++) {
                     sellModel.addElement(Contoller.getPlayer().getMyCards().get(i).getName());
                 }
@@ -117,8 +119,16 @@ public class Shop extends GamePanel {
             buyButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    if (buyModel != null)
+                        buyModel.removeAllElements();
+                    if (Contoller.getPlayer() != null)
+                        for (int i = 0; i < Contoller.getPlayer().buyAvailable().size(); i++) {
+                            buyModel.addElement(Contoller.getPlayer().buyAvailable().get(i).getName());
+                        }
                     cardSelection.setModel(buyModel);
                     buy = true;
+                    if (Contoller.getPlayer() != null)
+                        wallet.setText("Wallet: " + Contoller.getPlayer().getGems() + " Gems");
                 }
             });
             sellButton.addActionListener(new ActionListener() {
@@ -132,6 +142,8 @@ public class Shop extends GamePanel {
                         }
                     cardSelection.setModel(sellModel);
                     buy = false;
+                    if (Contoller.getPlayer() != null)
+                        wallet.setText("Wallet: " + Contoller.getPlayer().getGems() + " Gems");
                 }
             });
 
@@ -151,11 +163,19 @@ public class Shop extends GamePanel {
                     card = Cards.createCardByName(cardName);
 
                     if (buy && LoginCheck.buy(card)) {
-                        ButtonController ok = new ButtonController(ButtonController.ButtonOptions.Buy, cardName);
                         wallet.setText("Wallet: " + Contoller.getPlayer().getGems() + " Gems");
+
+                        if (buyModel != null)
+                            buyModel.removeAllElements();
+                        if (Contoller.getPlayer() != null && Contoller.getPlayer().getMyCards().size() != 0)
+                            for (int i = 0; i < Contoller.getPlayer().buyAvailable().size(); i++) {
+                                buyModel.addElement(Contoller.getPlayer().buyAvailable().get(i).getName());
+                            }
+                        ButtonController ok = new ButtonController(ButtonController.ButtonOptions.Buy, cardName);
+                    } else if (buy && !LoginCheck.buy(card)) {
+                        JOptionPane.showMessageDialog(Shop.shopPanel(), "You can't afford this card", "SHOP MESSAGE", JOptionPane.ERROR_MESSAGE);
                     } else if (!buy) {
                         LoginCheck.sell(card);
-                        ButtonController ok = new ButtonController(ButtonController.ButtonOptions.Sell, cardName);
                         wallet.setText("Wallet: " + Contoller.getPlayer().getGems() + " Gems");
 
                         sellModel.removeAllElements();
@@ -163,6 +183,9 @@ public class Shop extends GamePanel {
                             for (int i = 0; i < Contoller.getPlayer().getMyCards().size(); i++) {
                                 sellModel.addElement(Contoller.getPlayer().getMyCards().get(i).getName());
                             }
+                        ButtonController ok = new ButtonController(ButtonController.ButtonOptions.Sell, cardName);
+                    } else if (!buy && !LoginCheck.buy(card)) {
+                        JOptionPane.showMessageDialog(Shop.shopPanel(), "You can't sell this card", "SHOP MESSAGE", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             });
@@ -179,6 +202,7 @@ public class Shop extends GamePanel {
             showButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    if (cardSelection.getSelectedItem() == null) return;
                     String cardName = cardSelection.getSelectedItem().toString();
                     card = Cards.createCardByName(cardName);
 
@@ -187,6 +211,7 @@ public class Shop extends GamePanel {
                         BufferedImage shopBufferedImage = ImageIO.read(shopFile);
                         cardShow.setIcon(new ImageIcon(shopBufferedImage));
                         cardShow.setForeground(Color.DARK_GRAY);
+
 
                         detail.setText("Name: " + card.getName() + "\n" + "Type: " + card.getType() + "\n" +
                                 "Class: :" + card.getCardClass() + "\n" + "Rarity: " + card.getRarity() + "\n" +
