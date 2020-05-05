@@ -101,9 +101,11 @@ public class Cards {
     public static Cards createCardByName(String name) {
         Cards answer = null;
         try {
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < Constants.cardNumbers; i++) {
                 if (cards[i].name.equalsIgnoreCase(name)) {
                     answer = cards[i];
+                    answer.cardClass=cards[i].cardClass;
+                    System.out.println(cards[i].cardClass);
                 }
             }
             return answer;

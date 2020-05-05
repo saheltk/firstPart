@@ -28,7 +28,7 @@ public class MainPanel extends JPanel {
         add(Menu.menuPanel(),MENU);
         add(Shop.shopPanel(),SHOP);
         add(Status.statusPanel(),STATUS);
-        //add(Login.loginPanel(),SETTING);
+        add(Setting.settingPanel(),SETTING);
         add(Collections.collectionsPanel(),COLLECTIONS);
         add(Play.playPanel(),PLAY);
     }

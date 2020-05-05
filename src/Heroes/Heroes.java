@@ -12,7 +12,7 @@ public class Heroes {
 
     private HeroName name;
     private int Mana;
-    private int HP;
+    private int hp;
     private int attack;
     private boolean heroPowerUsed = false;
     private boolean Mage = false;
@@ -25,19 +25,21 @@ public class Heroes {
     public Heroes() { }
     public Heroes(HeroName name) {
         this.name = name;
-        HP = 30;
+        this.hp = 30;
         this.SpecialPower();
     }
 
 
     //Getters
+    public int getHP() { return hp; }
+
     public int getPrice() { return price; }
 
     private void SpecialPower() {
 
         switch (name) {
             case Warlock:
-                HP = 35;
+                hp = 35;
                 break;
             case Rogue:
                 Rogue = true;
@@ -109,11 +111,11 @@ public class Heroes {
         /////////////////////////////////////////////////////
         switch (name) {
             case Warlock:
-                if (HP < 3) {
-                    System.out.println("No enough HP ");
+                if (hp < 3) {
+                    System.out.println("No enough hp ");
                     return;
                 }
-                HP -= 2;
+                hp -= 2;
                 Mana -= 2;
                 heroPowerUsed = false;
                 System.out.println("Selected Weapon?");
@@ -170,7 +172,7 @@ public class Heroes {
     }
 
     public void attack(Player player, Cards c) {
-        player.getCurrentHero().HP -= attack;
+        player.getCurrentHero().hp -= attack;
 
     }
 

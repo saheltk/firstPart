@@ -30,11 +30,14 @@ public class Collections extends GamePanel {
     private String buttonPath = "src\\Graphic\\Buttons\\";
 
     private JButton backMenu;
+    private JTextArea lock;
 
 
     private boolean cardDeckSelection;
     private Deck chosenDeck;
+    private JRadioButton chosenDeckRadioButton;
     private JComboBox deckCardSelection;
+    private JComboBox choosenDeckCardSelection;
     private JComboBox addCardJComboBox;
 
     private JButton addCard;
@@ -52,6 +55,10 @@ public class Collections extends GamePanel {
     private JRadioButton myCards;
     private JRadioButton notMyCards;
     private JRadioButton myDecks;
+    private JRadioButton filterByMana;
+    private JRadioButton search;
+    private JTextField searchBox;
+
     private ButtonGroup cards;
     private JTextArea deckDetail;
 
@@ -101,7 +108,12 @@ public class Collections extends GamePanel {
 
             //////////////////////////////////////////////
             deckCardSelection = new JComboBox();
+            choosenDeckCardSelection = new JComboBox();
             addCardJComboBox = new JComboBox();
+            chosenDeckRadioButton = new JRadioButton("Choose this deck");
+            chosenDeckRadioButton.setSelected(false);
+            chosenDeckRadioButton.setContentAreaFilled(false);
+            chosenDeckRadioButton.setForeground(Color.WHITE);
 
             addCard = new JButton();
             removeCard = new JButton();
@@ -127,19 +139,33 @@ public class Collections extends GamePanel {
             myDecks.setContentAreaFilled(false);
             myDecks.setForeground(Color.WHITE);
 
-            deckDetail = new JTextArea();
+            filterByMana = new JRadioButton("Filter by mana(sorted)");
+            filterByMana.setContentAreaFilled(false);
+            filterByMana.setForeground(Color.WHITE);
+
+            search = new JRadioButton("Search");
+            search.setContentAreaFilled(false);
+            search.setForeground(Color.WHITE);
+
+            searchBox = new JTextField(10);
 
             cards = new ButtonGroup();
             cards.add(allCards);
             cards.add(myCards);
             cards.add(notMyCards);
             cards.add(myDecks);
+            cards.add(filterByMana);
+            cards.add(search);
             allCards.setSelected(true);
 
             allCards.setActionCommand("all");
             myCards.setActionCommand("my");
             notMyCards.setActionCommand("not");
             myDecks.setActionCommand("decks");
+            filterByMana.setActionCommand("filter");
+            search.setActionCommand("search");
+
+            deckDetail = new JTextArea();
 
             cardSelection = new JComboBox();
             cardRemoveSelection = new JComboBox();
@@ -153,6 +179,9 @@ public class Collections extends GamePanel {
             DefaultComboBoxModel myModel = new DefaultComboBoxModel();
             DefaultComboBoxModel notModel = new DefaultComboBoxModel();
             DefaultComboBoxModel deckModel = new DefaultComboBoxModel();
+            DefaultComboBoxModel filterModel = new DefaultComboBoxModel();
+            DefaultComboBoxModel searchModel = new DefaultComboBoxModel();
+
 
             cardSelection.setModel(allModel);
 
@@ -181,8 +210,6 @@ public class Collections extends GamePanel {
                     cardSelection.setModel(allModel);
                     decks(false);
                     ButtonController mycard = new ButtonController(ButtonController.ButtonOptions.Choose_All_Cards);
-
-
                 }
 
             });
@@ -237,6 +264,47 @@ public class Collections extends GamePanel {
 
                 }
             });
+            filterByMana.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (filterModel != null)
+                        filterModel.removeAllElements();
+                    if (Contoller.getPlayer() != null && Contoller.getPlayer().despiteMyCards().size() != 0)
+                        for (int i = 0; i < 12; i++) {
+                            for (int j = 0; j < Constants.cardNumbers; j++) {
+                                if (Cards.cards[j].getMana() == i)
+                                    filterModel.addElement(Cards.cards[j].getName());
+                            }
+                        }
+                    cardSelection.setModel(filterModel);
+                    decks(false);
+                    ButtonController filterByManabc = new ButtonController(ButtonController.ButtonOptions.Filter_by_mana);
+                }
+            });
+            search.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String searchedWord = searchBox.getText();
+                    System.out.println(searchedWord);
+                    if (searchModel != null)
+                        searchModel.removeAllElements();
+                    if (Contoller.getPlayer() != null && Contoller.getPlayer().despiteMyCards().size() != 0)
+
+                        for (int j = 0; j < Constants.cardNumbers; j++) {
+                            if (Cards.cards[j].getName().contains(searchedWord)) {
+                                searchModel.addElement(Cards.cards[j].getName());
+                            }
+                        }
+
+                    cardSelection.setModel(searchModel);
+                    decks(false);
+                    ButtonController searchbc = new ButtonController(ButtonController.ButtonOptions.Searched_for, searchedWord);
+                }
+            });
+
+            lock = new JTextArea();
+            lock.setText("LOCK");
+            lock.setForeground(Color.red);
 
 
             //show
@@ -258,7 +326,7 @@ public class Collections extends GamePanel {
                     }
                     card = Cards.createCardByName(cardName);
 
-
+                    System.out.println(cardDeckSelection);
                     File shopFile = new File("src\\Graphic\\Cards\\card" + (card.getId() + 1) + ".png");
                     BufferedImage shopBufferedImage = null;
                     try {
@@ -270,13 +338,20 @@ public class Collections extends GamePanel {
                     cardShow.setBorderPainted(false);
                     cardShow.setContentAreaFilled(false);
                     cardShow.setForeground(Color.DARK_GRAY);
+                    boolean isLock = true;
+                    for (Cards cards : Contoller.getPlayer().getMyCards())
+                        if (cards.getName().equals(card.getName())) isLock = false;
+
+                    if (isLock)
+                        cardShow.setVisible(true);
+                    else
+                        cardShow.setVisible(false);
 
                     detail.setText("Name: " + card.getName() + "\n" + "Type: " + card.getType() + "\n" +
                             "Class: :" + card.getCardClass() + "\n" + "Rarity: " + card.getRarity() + "\n" +
                             "Mana: " + card.getMana() + "\n" + "Price: " + card.getCost());
                 }
             });
-
 
 
             cardShow.setForeground(Color.DARK_GRAY);
@@ -296,9 +371,6 @@ public class Collections extends GamePanel {
                     ButtonController showCard = new ButtonController(ButtonController.ButtonOptions.Show_Card, card.getName());
                 }
             });
-
-
-
 
 
             File removeFile = new File(buttonPath + "removeCard.png");
@@ -350,6 +422,7 @@ public class Collections extends GamePanel {
             editNameField.setVisible(false);
             deckCardSelection.setVisible(false);
             addCardJComboBox.setVisible(false);
+            chosenDeckRadioButton.setVisible(false);
             cardRemoveSelection.setVisible(false);
             deckDetail.setVisible(false);
 
@@ -360,6 +433,7 @@ public class Collections extends GamePanel {
 
     protected void decks(boolean show) {
         if (!show) {
+            cardDeckSelection=false;
             addCard.setVisible(false);
             removeCard.setVisible(false);
             delete.setVisible(false);
@@ -368,11 +442,14 @@ public class Collections extends GamePanel {
             editNameField.setVisible(false);
             deckCardSelection.setVisible(false);
             addCardJComboBox.setVisible(false);
+            chosenDeckRadioButton.setVisible(false);
             cardRemoveSelection.setVisible(false);
             deckDetail.setVisible(false);
 
             return;
         }
+        cardDeckSelection=true;
+
         addCard.setVisible(true);
         removeCard.setVisible(true);
         delete.setVisible(true);
@@ -381,6 +458,7 @@ public class Collections extends GamePanel {
         editNameField.setVisible(true);
         deckCardSelection.setVisible(true);
         addCardJComboBox.setVisible(true);
+        chosenDeckRadioButton.setVisible(true);
         cardRemoveSelection.setVisible(true);
         deckDetail.setVisible(true);
         DefaultComboBoxModel cardsForDeck = new DefaultComboBoxModel();
@@ -389,7 +467,7 @@ public class Collections extends GamePanel {
         if (cardSelection.getSelectedItem() != null) {
             String deckName;
             String chosen = cardSelection.getSelectedItem().toString();
-            if (!chosen.substring(0, 3).equals("New")) {
+            if (chosen.length() >= 3 && !chosen.substring(0, 3).equals("New")) {
                 ArrayList<Deck> decks = Contoller.getPlayer().getDeck();
                 deckName = cardSelection.getSelectedItem().toString();
                 for (Deck deck : decks) {
@@ -402,23 +480,26 @@ public class Collections extends GamePanel {
                 HeroName heroName = HeroName.valueOf(chosen.substring(4));
                 ArrayList<Cards> newCards = new ArrayList<Cards>();
                 Deck newDeck = new Deck(" New Deck", new Heroes(heroName), newCards);
-                ButtonController newDeckbc = new ButtonController(ButtonController.ButtonOptions.newDeck, chosenDeck.getName());
                 Contoller.getPlayer().addDeck(newDeck);
                 chosenDeck = newDeck;
                 Contoller.getPlayer().update();
+                ButtonController newDeckbc = new ButtonController(ButtonController.ButtonOptions.newDeck, chosenDeck.getName());
+
             }
 
-
+            cardsForDeck.removeAllElements();
             if (chosenDeck.getAllCards() != null)
                 for (Cards card : chosenDeck.getAllCards()) {
                     cardsForDeck.addElement(card.getName());
                 }
             deckCardSelection.setModel(cardsForDeck);
-
+            String commonName = "-";
+            if (chosenDeck != null && chosenDeck.getMostCommon() != null)
+                commonName = chosenDeck.getMostCommon().getName();
             deckDetail.setText("Name: " + chosenDeck.getName() + "\n" + "Hero: " + chosenDeck.getHero().getName() + "\n" +
                     "Wins: :" + chosenDeck.getWins() + "\n" + "winsToTotal: " + chosenDeck.getWinsToTotal() + "\n" +
                     "Games: " + chosenDeck.getGames() + "\n" + "Price: " + chosenDeck.getCost() +
-                    "\nMost Common Card: " + chosenDeck.getMostCommon());
+                    "\nMost Common Card: " + commonName);
 
             DefaultComboBoxModel addableCards = new DefaultComboBoxModel();
             for (Cards card : Contoller.getPlayer().despiteDeck(chosenDeck)) {
@@ -430,7 +511,7 @@ public class Collections extends GamePanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
-                        String cardName = cardSelection.getSelectedItem().toString();
+                        String cardName = addCardJComboBox.getSelectedItem().toString();
                         card = Cards.createCardByName(cardName);
                         if (LoginCheck.addCard(cardName, chosenDeck)) {
                             if (card != null) {
@@ -442,10 +523,25 @@ public class Collections extends GamePanel {
                         }
 
                         DefaultComboBoxModel addableCards = new DefaultComboBoxModel();
+                        addableCards.removeAllElements();
                         for (Cards card : Contoller.getPlayer().despiteDeck(chosenDeck)) {
                             addableCards.addElement(card.getName());
                         }
                         addCardJComboBox.setModel(addableCards);
+                        if (chosenDeck.getAllCards() != null && chosenDeck.getAllCards().size() != 0) {
+                            DefaultComboBoxModel choosenDeckCardSelectionModel = new DefaultComboBoxModel();
+                            choosenDeckCardSelectionModel.removeAllElements();
+                            for (Cards cards : chosenDeck.getAllCards()) {
+                                choosenDeckCardSelectionModel.addElement(cards.getName());
+                            }
+                            choosenDeckCardSelection.setModel(choosenDeckCardSelectionModel);
+                        }
+                        cardsForDeck.removeAllElements();
+                        if (chosenDeck.getAllCards() != null)
+                            for (Cards card : chosenDeck.getAllCards()) {
+                                cardsForDeck.addElement(card.getName());
+                            }
+                        deckCardSelection.setModel(cardsForDeck);
                     } catch (Exception e1) {
                     }
                 }
@@ -468,10 +564,25 @@ public class Collections extends GamePanel {
                         }
 
                         DefaultComboBoxModel addableCards = new DefaultComboBoxModel();
+                        addableCards.removeAllElements();
                         for (Cards card : Contoller.getPlayer().despiteDeck(chosenDeck)) {
                             addableCards.addElement(card.getName());
                         }
                         addCardJComboBox.setModel(addableCards);
+                        if (chosenDeck.getAllCards() != null && chosenDeck.getAllCards().size() != 0) {
+                            DefaultComboBoxModel choosenDeckCardSelectionModel = new DefaultComboBoxModel();
+                            choosenDeckCardSelectionModel.removeAllElements();
+                            for (Cards cards : chosenDeck.getAllCards()) {
+                                choosenDeckCardSelectionModel.addElement(cards.getName());
+                            }
+                            choosenDeckCardSelection.setModel(choosenDeckCardSelectionModel);
+                        }
+                        cardsForDeck.removeAllElements();
+                        if (chosenDeck.getAllCards() != null)
+                            for (Cards card : chosenDeck.getAllCards()) {
+                                cardsForDeck.addElement(card.getName());
+                            }
+                        deckCardSelection.setModel(cardsForDeck);
                     } catch (Exception e2) {
                     }
                 }
@@ -497,6 +608,10 @@ public class Collections extends GamePanel {
                         chosenDeck.setName(name);
                         Contoller.getPlayer().update();
                         ButtonController editNamebc = new ButtonController(ButtonController.ButtonOptions.edit_Deck_Name, lastName + " to " + name);
+                        deckDetail.setText("Name: " + chosenDeck.getName() + "\n" + "Hero: " + chosenDeck.getHero().getName() + "\n" +
+                                "Wins: :" + chosenDeck.getWins() + "\n" + "winsToTotal: " + chosenDeck.getWinsToTotal() + "\n" +
+                                "Games: " + chosenDeck.getGames() + "\n" + "Price: " + chosenDeck.getCost() +
+                                "\nMost Common Card: " + chosenDeck.getName());
                     }
                 }
             });
@@ -511,6 +626,25 @@ public class Collections extends GamePanel {
                     }
                 }
             });
+
+            chosenDeckRadioButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (chosenDeckRadioButton.isSelected()) {
+                        Contoller.getPlayer().setChosenDeck(chosenDeck);
+                    }
+                }
+            });
+
+            if (chosenDeck.getAllCards() != null && chosenDeck.getAllCards().size() != 0) {
+                DefaultComboBoxModel choosenDeckCardSelectionModel = new DefaultComboBoxModel();
+                choosenDeckCardSelectionModel.removeAllElements();
+                for (Cards cards : chosenDeck.getAllCards()) {
+                    choosenDeckCardSelectionModel.addElement(cards.getName());
+                }
+                choosenDeckCardSelection.setModel(choosenDeckCardSelectionModel);
+            }
+
 
         }
     }
@@ -530,20 +664,32 @@ public class Collections extends GamePanel {
         gridBagConstraints.fill = GridBagConstraints.NONE;
         gridBagConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
 
-        gridBagConstraints.insets = new Insets(210 - 60, 320, 0, 0);
+        gridBagConstraints.insets = new Insets(170 - 60, 320, 0, 0);
         backgroundLabel.add(allCards, gridBagConstraints);
 
-        gridBagConstraints.insets = new Insets(230 - 60, 320, 0, 0);
+        gridBagConstraints.insets = new Insets(190 - 60, 320, 0, 0);
         backgroundLabel.add(myCards, gridBagConstraints);
 
-        gridBagConstraints.insets = new Insets(250 - 60, 320, 0, 0);
+        gridBagConstraints.insets = new Insets(210 - 60, 320, 0, 0);
         backgroundLabel.add(notMyCards, gridBagConstraints);
 
-        gridBagConstraints.insets = new Insets(270 - 60, 320, 0, 0);
+        gridBagConstraints.insets = new Insets(230 - 60, 320, 0, 0);
         backgroundLabel.add(myDecks, gridBagConstraints);
+
+        gridBagConstraints.insets = new Insets(250 - 60, 320, 0, 0);
+        backgroundLabel.add(filterByMana, gridBagConstraints);
+
+        gridBagConstraints.insets = new Insets(275 - 60, 320, 0, 0);
+        backgroundLabel.add(search, gridBagConstraints);
+
+        gridBagConstraints.insets = new Insets(270 - 60, 200, 0, 0);
+        backgroundLabel.add(searchBox, gridBagConstraints);
 
         gridBagConstraints.insets = new Insets(300 - 60, 320, 0, 0);
         backgroundLabel.add(cardSelection, gridBagConstraints);
+
+        gridBagConstraints.insets = new Insets(300 - 60, 430, 0, 0);
+        backgroundLabel.add(chosenDeckRadioButton, gridBagConstraints);
 
         gridBagConstraints.insets = new Insets(330 - 60, 320, 0, 0);
         backgroundLabel.add(deckCardSelection, gridBagConstraints);
@@ -559,6 +705,9 @@ public class Collections extends GamePanel {
 
         gridBagConstraints.insets = new Insets(470 - 60, 320, 0, 0);
         backgroundLabel.add(removeCard, gridBagConstraints);
+
+        gridBagConstraints.insets = new Insets(475 - 60, 200, 0, 0);
+        backgroundLabel.add(choosenDeckCardSelection, gridBagConstraints);
 
         gridBagConstraints.insets = new Insets(525 - 60, 320, 0, 0);
         backgroundLabel.add(delete, gridBagConstraints);
@@ -576,11 +725,14 @@ public class Collections extends GamePanel {
         gridBagConstraints.insets = new Insets(210, 500, 0, 0);
         backgroundLabel.add(cardShow, gridBagConstraints);
 
+        gridBagConstraints.insets = new Insets(500, 600, 0, 0);
+        backgroundLabel.add(lock, gridBagConstraints);
+
 
         gridBagConstraints.insets = new Insets(210, 750, 0, 0);
         backgroundLabel.add(detail, gridBagConstraints);
 
-        gridBagConstraints.insets = new Insets(210, 100, 0, 0);
+        gridBagConstraints.insets = new Insets(240, 10, 0, 0);
         backgroundLabel.add(deckDetail, gridBagConstraints);
 
 

@@ -1,11 +1,14 @@
 package Graphic;
 
+import Command.Contoller;
 import Constants.Constants;
 import Graphic.Panels.Login;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,8 +16,6 @@ import java.net.URL;
 
 public abstract class GamePanel extends JPanel {
     private static GamePanel gamePanel;
-    Dimension dimension;
-    GridBagConstraints gridBagConstraints;
     protected JLabel backgroundLabel;
 
     protected GamePanel() {
@@ -23,6 +24,7 @@ public abstract class GamePanel extends JPanel {
     protected abstract void setButtons();
     protected abstract void setLabels();
     protected abstract void setGridBagConstraints();
+
 
 
     public static GamePanel get() {
@@ -52,6 +54,29 @@ public abstract class GamePanel extends JPanel {
             e.printStackTrace();
         }
 
+    }
+    protected void backMenu(JButton backMenu){
+        String buttonPath = "src\\Graphic\\Buttons\\";
+        File backMenuFile = new File(buttonPath + "woodenBackMenu.png");
+        BufferedImage backMenuBufferedImage = null;
+        try {
+            backMenuBufferedImage = ImageIO.read(backMenuFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        backMenu = new JButton();
+
+        backMenu.setIcon(new ImageIcon(backMenuBufferedImage));
+        backMenu.setBackground(Color.BLACK);
+        backMenu.setBorderPainted(false);
+        backMenu.setContentAreaFilled(false);
+        backMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainPanel.setPanel("menu");
+                Contoller.getPlayer().update();
+            }
+        });
     }
 
 }

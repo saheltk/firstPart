@@ -77,8 +77,12 @@ public class LoginCheck {
 
     public static boolean addCard(String cardName, Deck deck) {
         Cards card = Cards.createCardByName(cardName);
-        if (card!=null)
-        if (!(card.getClass().equals(Class.Free) || card.getClass().equals(deck.getHero().getName()))) return false;
+       /* if (card!=null)
+            if (!(card.getClass().toString().equals(Class.Free.toString()) || card.getClass().toString().equals(deck.getHero().getName()))){
+            System.out.println(card.getClass().toString());
+            System.out.println(deck.getHero().getName());
+            return false;
+        }*/
         deck.addCard(cardName);
 
         Contoller.getPlayer().update();

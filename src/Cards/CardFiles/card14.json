@@ -2,7 +2,7 @@
   "name": "Barrel Toss",
   "mana": 1,
   "rarity": "Rare",
-  "cardClass": "Natural",
+  "cardClass": "Free",
   "type": "Spell",
   "description": " Deal 2 damage "
 }

@@ -53,6 +53,7 @@ public class Player {
         player[number].log = new Logs(player[number]);
         player[number].creationTime = setTime().toString();
         player[number].gems = (50);
+        player[number].creationTime=setTime().toString();
         PlayersFactory.add(player[number]);
         player[number].update();
         return player[number];
@@ -73,7 +74,8 @@ public class Player {
 
         log = Logs.setLog(this);
         PlayersFactory.add(this);
-        number++;
+        if (player[number]!=null)
+            number++;
         id = number;
         player[number] = this;
     }
@@ -174,6 +176,11 @@ public class Player {
         ArrayList<Cards> answer = new ArrayList<Cards>();
         ArrayList<Cards> myArray = new ArrayList<Cards>();
 
+        if (deck.getAllCards()==null || deck.getAllCards().size()==0){
+            answer.addAll(myCards);
+            return answer;
+        }
+
         for (Cards card1: myCards) {
            int count=0;
             for (Cards card2:deck.getAllCards()){
@@ -183,7 +190,6 @@ public class Player {
             if (count<2){
                 answer.add(card1);
             }
-
         }
         return answer;
     }
@@ -246,10 +252,8 @@ public class Player {
             while (flag) {
                 System.out.println(number);
                 String id = "src\\Player\\users\\ID" + (number) + ".json";
-                System.out.println("ok");
                 file[number] = new FileReader(id);
-                System.out.println("ok");
-
+                System.out.println("hey");
                 player[number] = objectMapper.readValue(file[number], Player.class);
                 System.out.println("ok");
 
@@ -263,6 +267,8 @@ public class Player {
                 number++;
             }
         } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
             flag = false;
             return;
         }

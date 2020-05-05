@@ -1,7 +1,7 @@
 package Constants;
 
 public class Constants {
-    public static final int cardNumbers=20;
+    public static final int cardNumbers=37;
     public static final int Players=100;
     public static final int width=1120;
     public static final int height=700;
@@ -19,8 +19,8 @@ public class Constants {
     public static String getPlayBackgroundFileName() {
         return playBackgroundFileName;
     }
+    public static String getPlayCardFileName() { return playCardFileName; }
 
-    public static String getPlayCardFileName() {
-        return playCardFileName;
-    }
+    public static void setBackground(int background1) { background=background1; }
+    public static void setCard(int card1) { card=card1; }
 }

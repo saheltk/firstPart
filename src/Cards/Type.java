@@ -3,5 +3,6 @@ package Cards;
 public enum Type {
     Minion,
     Spell,
-    Weapons
+    Weapons,
+    Quest_and_reward
 }

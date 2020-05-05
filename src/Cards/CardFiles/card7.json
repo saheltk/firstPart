@@ -2,7 +2,7 @@
   "name": "Healing Touch",
   "mana": 3,
   "rarity": "Common",
-  "cardClass": "Natural",
+  "cardClass": "Free",
   "type": "Spell",
   "description": " Restore 8 Health "
 }
