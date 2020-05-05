@@ -1,0 +1,8 @@
+{
+  "name": "Strength in Numbers",
+  "mana": 1,
+  "rarity": "Common",
+  "cardClass": "Free",
+  "type": "Quest_and_reward",
+  "description": " Sidequest:Spend 10 Mana on minions.\nReward:Summon a minion from your deck. "
+}

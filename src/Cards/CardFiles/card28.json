@@ -1,0 +1,10 @@
+{
+  "name": "Curio Collector",
+  "mana": 5,
+  "rarity": "Rare",
+  "cardClass": "Free",
+  "type": "Minion",
+  "description": "Whenever you draw a card, gain +1/+1.",
+  "HP": 4,
+  "attack": 4
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Tomb Warden",
+  "mana": 8,
+  "rarity": "Rare",
+  "cardClass": "Free",
+  "type": "Minion",
+  "description": "Taunt \nBattlecry: Summon a copy of this minion.",
+  "HP": 6,
+  "attack": 3
+}

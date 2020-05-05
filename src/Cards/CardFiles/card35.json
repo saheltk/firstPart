@@ -1,0 +1,8 @@
+{
+  "name": "Hunter's Mark",
+  "mana": 2,
+  "rarity": "Common",
+  "cardClass": "Hunter",
+  "type": "Spell",
+  "description": " Change a minion's Health to 1. "
+}

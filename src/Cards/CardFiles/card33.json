@@ -1,0 +1,10 @@
+{
+  "name": "Poisoned Dagger",
+  "mana": 1,
+  "rarity": "Common",
+  "cardClass": "Free",
+  "type": "Weapons",
+  "description": "  ",
+  "attack": 2,
+  "durability": 2
+}

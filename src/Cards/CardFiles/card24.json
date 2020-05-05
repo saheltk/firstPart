@@ -1,0 +1,8 @@
+{
+  "name": "Book of Specters",
+  "mana": 2,
+  "rarity": "Epic",
+  "cardClass": "Free",
+  "type": "Spell",
+  "description": " Draw 3 cards. Discard any spells drawn."
+}

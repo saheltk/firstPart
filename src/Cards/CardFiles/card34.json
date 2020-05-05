@@ -1,0 +1,10 @@
+{
+  "name": "Swamp King Dred",
+  "mana": 7,
+  "rarity": "Legendary",
+  "cardClass": "Hunter",
+  "type": "Minion",
+  "description": " After your opponent plays a minion, attack it. ",
+  "HP": 2,
+  "attack": 9
+}

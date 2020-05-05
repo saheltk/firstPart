@@ -1,0 +1,10 @@
+{
+  "name": "Sathrovarr",
+  "mana": 9,
+  "rarity": "Legendary",
+  "cardClass": "Free",
+  "type": "Minion",
+  "description": "Choose a friendly minion. Add a copy of it to your hand, deck, and battlefield.",
+  "HP": 5,
+  "attack": 5
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Security Rover",
+  "mana": 6,
+  "rarity": "Rare",
+  "cardClass": "Free",
+  "type": "Minion",
+  "description": "Whenever this minion\ntakes damage, summon a\n2/3 Mech with Taunt.",
+  "HP": 6,
+  "attack": 2
+}

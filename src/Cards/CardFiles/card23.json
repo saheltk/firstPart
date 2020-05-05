@@ -1,0 +1,8 @@
+{
+  "name": "Pharaoh’s Blessing",
+  "mana": 6,
+  "rarity": "Rare",
+  "cardClass": "Free",
+  "type": "Spell",
+  "description": " Give a minion +4/+4, Divine Shield, and Taunt. "
+}
