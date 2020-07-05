@@ -2,7 +2,7 @@
   "name": "Fireball",
   "mana": 4,
   "rarity": "Common",
-  "cardClass": "Natural",
+  "cardClass": "Free",
   "type": "Spell",
   "description": " Deal 6 damage "
 }

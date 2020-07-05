@@ -88,6 +88,8 @@ public class ButtonController {
         Play,
         End_Turn,
         Choose_Deck,
+        Filter_by_mana,
+        Searched_for
 
 
 

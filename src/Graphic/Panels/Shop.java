@@ -3,7 +3,7 @@ package Graphic.Panels;
 import Cards.CardFactory;
 import Cards.Cards;
 import Command.Contoller;
-import Command.LoginCheck;
+import Command.Check;
 import Constants.Constants;
 import Graphic.ButtonController;
 import Graphic.GamePanel;
@@ -162,7 +162,7 @@ public class Shop extends GamePanel {
                     String cardName = cardSelection.getSelectedItem().toString();
                     card = Cards.createCardByName(cardName);
 
-                    if (buy && LoginCheck.buy(card)) {
+                    if (buy && Check.buy(card)) {
                         wallet.setText("Wallet: " + Contoller.getPlayer().getGems() + " Gems");
 
                         if (buyModel != null)
@@ -172,10 +172,10 @@ public class Shop extends GamePanel {
                                 buyModel.addElement(Contoller.getPlayer().buyAvailable().get(i).getName());
                             }
                         ButtonController ok = new ButtonController(ButtonController.ButtonOptions.Buy, cardName);
-                    } else if (buy && !LoginCheck.buy(card)) {
+                    } else if (buy && !Check.buy(card)) {
                         JOptionPane.showMessageDialog(Shop.shopPanel(), "You can't afford this card", "SHOP MESSAGE", JOptionPane.ERROR_MESSAGE);
                     } else if (!buy) {
-                        LoginCheck.sell(card);
+                        Check.sell(card);
                         wallet.setText("Wallet: " + Contoller.getPlayer().getGems() + " Gems");
 
                         sellModel.removeAllElements();
@@ -184,7 +184,7 @@ public class Shop extends GamePanel {
                                 sellModel.addElement(Contoller.getPlayer().getMyCards().get(i).getName());
                             }
                         ButtonController ok = new ButtonController(ButtonController.ButtonOptions.Sell, cardName);
-                    } else if (!buy && !LoginCheck.buy(card)) {
+                    } else if (!buy && !Check.buy(card)) {
                         JOptionPane.showMessageDialog(Shop.shopPanel(), "You can't sell this card", "SHOP MESSAGE", JOptionPane.ERROR_MESSAGE);
                     }
                 }

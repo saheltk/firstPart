@@ -2,7 +2,7 @@
   "name": "Candleshot",
   "mana": 1,
   "rarity": "Common",
-  "cardClass": "Natural",
+  "cardClass": "Free",
   "type": "Weapons",
   "description": " Your hero is immune while attacking ",
   "attack": 1,
